@@ -1,0 +1,27 @@
+# Minimal dbt project used to exercise the SafeSQL validator end to end.
+#
+# It is never built with `dbt run` — test_cartesian.sql is intentionally
+# invalid SQL. It exists so `safesql-dbt --project-dir integration_tests`
+# has real models and a real schema.yml to walk.
+#
+#     safesql-dbt --project-dir integration_tests --threshold 70
+#     # → test_cartesian.sql  CARTESIAN_JOIN            (score 25)
+#     # → test_fanout.sql     AGGREGATE_OVER_FANOUT_JOIN (score 25)
+#     # → exit 1
+#
+name: safesql_integration_tests
+version: "0.1.0"
+config-version: 2
+profile: safesql_integration_tests
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  safesql_threshold: 70
+  safesql_warn_only: false
+
+models:
+  safesql_integration_tests:
+    +materialized: view

@@ -1,0 +1,11 @@
+# Python build artifacts from `pip install .` / `python -m build`
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# dbt run artifacts (integration_tests/ is never built, but just in case)
+target/
+dbt_packages/
+logs/

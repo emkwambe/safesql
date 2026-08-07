@@ -1,0 +1,30 @@
+# SafeSQL Pro — reference dbt project config.
+#
+# Copy the `vars:` and `on-run-start:` blocks into your own dbt_project.yml.
+#
+# IMPORTANT — how enforcement actually works:
+# dbt hooks (on-run-start, pre-hook, post-hook) execute SQL against your
+# warehouse. They cannot shell out, and dbt's Jinja sandbox has no HTTP client,
+# so no hook or macro can call the SafeSQL API directly. The hook below is a
+# reminder only; blocking enforcement comes from running `safesql-dbt` as a
+# step beside dbt — via pre-commit, CI, or a shell step before `dbt run`:
+#
+#     safesql-dbt --project-dir . --threshold 70 && dbt run
+#
+name: safesql_reference
+version: "0.1.0"
+config-version: 2
+profile: default
+
+model-paths: ["models"]
+
+vars:
+  # Fail models scoring below this. Mirrors the SafeSQL score policy:
+  # <41 hard error · 41-69 high-risk warning · 70-84 medium · 85+ suggestion.
+  safesql_threshold: 70
+  # true → report findings but never block the run.
+  safesql_warn_only: false
+
+on-run-start:
+  # Renders to an empty statement (dbt skips it) and logs the reminder.
+  - "{{ log('SafeSQL: enforcement runs via `safesql-dbt --threshold=' ~ var('safesql_threshold', 70) ~ (' --warn-only' if var('safesql_warn_only', false) else '') ~ '` (pre-commit or CI) — dbt hooks cannot call it.', info=True) }}"

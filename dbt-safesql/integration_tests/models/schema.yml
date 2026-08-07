@@ -1,0 +1,30 @@
+version: 2
+
+# Typed columns here are what extract_schema_from_dbt() turns into DDL, so the
+# column-level detectors have a schema to check against. Without this file the
+# structural detectors still fire, but column resolution is skipped.
+models:
+  - name: users
+    columns:
+      - name: id
+        data_type: UUID
+      - name: country
+        data_type: TEXT
+
+  - name: orders
+    columns:
+      - name: id
+        data_type: UUID
+      - name: user_id
+        data_type: UUID
+      - name: total_amount
+        data_type: NUMERIC
+
+  - name: user_tags
+    columns:
+      - name: id
+        data_type: UUID
+      - name: user_id
+        data_type: UUID
+      - name: tag
+        data_type: TEXT
