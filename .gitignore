@@ -34,3 +34,9 @@ pictures/
 *.sln
 *.sw?
 *.bak
+
+# Python build artifacts from the pre-commit shim (pyproject.toml at root)
+build/
+*.egg-info/
+__pycache__/
+*.pyc

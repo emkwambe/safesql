@@ -1,0 +1,31 @@
+name: SafeSQL Pro — PR review
+
+# Posts inline review comments on SQL files changed in a pull request.
+#
+# Note on forks: GITHUB_TOKEN is read-only for pull requests opened from a fork,
+# so the review call will 403 and the action falls back to the job summary. The
+# usual workaround (pull_request_target) runs untrusted code with a write token
+# and is deliberately not used here.
+on:
+  pull_request:
+    paths: ['**/*.sql']
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: SafeSQL PR review
+        uses: mpingosystems/safesql@v1
+        with:
+          mode: pr-review
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # block = failed check blocks the merge; warn = comment only
+          comment_mode: block
+          dialect: postgresql
+          # Optional: give the engine a schema so column-level detectors fire.
+          # schema_file: db/schema.sql

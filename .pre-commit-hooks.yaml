@@ -1,0 +1,42 @@
+# SafeSQL Pro — pre-commit hook manifest.
+#
+# This file MUST live at the repository root: pre-commit reads
+# .pre-commit-hooks.yaml from the top level of the repo named in `repo:` and
+# cannot look inside a subdirectory. `language: python` makes pre-commit
+# pip-install this repo root, which is what the root pyproject.toml shim is
+# for — it pulls `dbt-safesql` from PyPI, and that package provides both
+# console scripts below.
+#
+#   repos:
+#     - repo: https://github.com/mpingosystems/safesql
+#       rev: dbt-safesql-v0.2.0
+#       hooks:
+#         - id: safesql-sql
+
+# File-scoped. Validates exactly the staged .sql files pre-commit passes it.
+# Use this one for ordinary SQL repos.
+- id: safesql-sql
+  name: SafeSQL Pro — Semantic SQL Validation
+  description: >-
+    Validate staged SQL files for logic errors (fan-out aggregates, cartesian
+    joins, LEFT JOIN WHERE traps) before they are committed.
+  entry: safesql-sql
+  language: python
+  types: [sql]
+  args: [--threshold=70, --dialect=postgres]
+  require_serial: true
+
+# Project-wide and dbt-aware. Ignores the filenames pre-commit passes and walks
+# the whole dbt project (models/**/*.sql + schema.yml), because a dbt model's
+# correctness depends on refs and column types declared elsewhere.
+- id: safesql-validate
+  name: SafeSQL Pro — dbt Project Validation
+  description: >-
+    Validate every model in a dbt project with SafeSQL before commit. Strips
+    dbt Jinja and builds a schema from schema.yml / sources.yml.
+  entry: safesql-dbt
+  language: python
+  types: [sql]
+  args: [--threshold=70]
+  pass_filenames: false
+  require_serial: true

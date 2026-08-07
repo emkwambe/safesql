@@ -37,17 +37,44 @@ Enforcement runs *beside* dbt, in one of three places:
 
 ### 1. pre-commit (recommended)
 
+Two hook ids are published from the repo root manifest. Pick the one that
+matches your project:
+
 ```yaml
-# .pre-commit-config.yaml
+# .pre-commit-config.yaml — ordinary SQL repo (file-scoped)
 repos:
   - repo: https://github.com/mpingosystems/safesql
-    rev: dbt-safesql-v0.1.0
+    rev: dbt-safesql-v0.2.0
     hooks:
-      - id: safesql-validate
+      - id: safesql-sql
         args: [--threshold=70, --dialect=postgres]
 ```
 
-Blocks the commit when a model scores below the threshold.
+```yaml
+# .pre-commit-config.yaml — dbt project (whole-project, dbt-aware)
+repos:
+  - repo: https://github.com/mpingosystems/safesql
+    rev: dbt-safesql-v0.2.0
+    hooks:
+      - id: safesql-validate
+        args: [--threshold=70]
+```
+
+| Hook id | Scope | Use when |
+|---|---|---|
+| `safesql-sql` | Validates exactly the staged `.sql` files | Any SQL repo |
+| `safesql-validate` | Walks the whole dbt project (`models/**` + `schema.yml`), ignores staged paths | dbt projects, where a model's correctness depends on refs and column types declared elsewhere |
+
+Both block the commit when something scores below the threshold; add
+`--warn-only` to report without blocking.
+
+`--dialect` accepts the short forms too — `postgres`, `pg`, `psql` and `bq` are
+normalised to the engine's `postgresql` / `bigquery`.
+
+> The manifest lives at the **repository root** (`.pre-commit-hooks.yaml`), as
+> pre-commit requires, and the root `pyproject.toml` is a shim that pulls
+> `dbt-safesql` from PyPI to provide the console scripts. Neither is part of the
+> SafeSQL Pro web app build.
 
 ### 2. CI, or a shell step before dbt run
 

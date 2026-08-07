@@ -1,0 +1,32 @@
+# Packaging shim for pre-commit ONLY — this is not how SafeSQL Pro is built.
+#
+# The product is a Node/Vite/TypeScript app (see package.json). This file
+# exists because pre-commit, for a `language: python` hook, pip-installs the
+# root of the repo named in `repo:`. It has no source of its own: it simply
+# depends on `dbt-safesql` from PyPI, which provides the `safesql-sql` and
+# `safesql-dbt` console scripts that .pre-commit-hooks.yaml invokes.
+#
+# Keep the dbt-safesql lower bound in step with the hooks manifest: the
+# safesql-sql entry point first appears in 0.2.0.
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safesql-pre-commit-hooks"
+version = "0.2.0"
+description = "pre-commit hook shim for SafeSQL Pro (installs dbt-safesql)"
+readme = "dbt-safesql/README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+dependencies = ["dbt-safesql>=0.2.0"]
+
+[project.urls]
+Homepage = "https://safesqlpro.dev"
+Source = "https://github.com/mpingosystems/safesql"
+
+# No Python sources at the repo root. Declaring this explicitly stops
+# setuptools auto-discovery from scanning the Node tree and erroring out on
+# multiple top-level directories.
+[tool.setuptools]
+py-modules = []

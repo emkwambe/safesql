@@ -16,7 +16,7 @@ with open(os.path.join(HERE, "README.md"), "r", encoding="utf-8") as fh:
 
 setup(
     name="dbt-safesql",
-    version="0.1.0",
+    version="0.2.0",
     description="Validate dbt SQL models with SafeSQL Pro before they execute",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
@@ -27,12 +27,19 @@ setup(
         "Source": "https://github.com/mpingosystems/safesql",
     },
     license="Apache-2.0",
-    # validate_dbt.py lives at the package root — shipped as a module, not a
-    # package, so the existing file stays where it is.
-    py_modules=["validate_dbt"],
+    # validate_dbt.py / validate_files.py live at the package root — shipped as
+    # modules, not a package, so the existing files stay where they are.
+    py_modules=["validate_dbt", "validate_files"],
     python_requires=">=3.9",
     install_requires=["requests>=2.25", "pyyaml>=5.4"],
-    entry_points={"console_scripts": ["safesql-dbt=validate_dbt:main"]},
+    entry_points={
+        "console_scripts": [
+            # project-wide, dbt-aware (walks models/**, builds DDL from schema.yml)
+            "safesql-dbt=validate_dbt:main",
+            # file-scoped, not dbt-aware (validates exactly the paths given)
+            "safesql-sql=validate_files:main",
+        ]
+    },
     keywords=["dbt", "sql", "validation", "data-quality", "safesql", "linter"],
     classifiers=[
         "Development Status :: 4 - Beta",

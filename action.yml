@@ -1,3 +1,9 @@
+# Root action manifest — this is what `uses: mpingosystems/safesql@v1` resolves to.
+#
+# GitHub looks for action.yml at the ROOT of the repository named in `uses:`,
+# so this file must stay here even though the action's source and bundle live
+# in action/. Keep the inputs/outputs in sync with action/action.yml; `main`
+# below is repo-root-relative and points at the same ncc bundle.
 name: SafeSQL Validate
 description: "Validate SQL files for semantic errors before merge"
 branding:
@@ -40,4 +46,4 @@ outputs:
     description: "Number of SQL files checked"
 runs:
   using: "node20"
-  main: "dist/index.js"
+  main: "action/dist/index.js"
