@@ -9,7 +9,8 @@ inputs:
     required: false
     default: "validate"
   github_token:
-    description: "Token for pr-review mode. Usually ${{ secrets.GITHUB_TOKEN }}. Needs pull-requests: write."
+    # No ${{ }} expressions in action metadata — see the note in the root action.yml.
+    description: "Token for pr-review mode. Pass the workflow's GITHUB_TOKEN secret. Needs pull-requests: write."
     required: false
   comment_mode:
     description: "pr-review only: block (fail the check) | warn (comment without blocking)"
