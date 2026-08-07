@@ -12,6 +12,9 @@ CREATE TABLE orders (
   total_amount NUMERIC(12,2),
   order_date DATE
 );
+-- Second child of users. Joining this alongside orders fans out the order rows,
+-- which is what fanout_test.sql demonstrates. This comment is deliberate: it
+-- also guards the parseDDL comment-stripping fix in CI.
 CREATE TABLE user_events (
   id UUID PRIMARY KEY,
   user_id UUID REFERENCES users(id),

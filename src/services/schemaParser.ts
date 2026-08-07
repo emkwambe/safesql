@@ -22,10 +22,76 @@ export function unwrapName(node: unknown): string | null {
   return null;
 }
 
+/**
+ * Remove SQL comments from a DDL string, leaving everything else intact.
+ *
+ * parseDDL keeps only `;`-separated chunks that START WITH "CREATE TABLE", so a
+ * single `-- comment` before a statement pushed the keyword off the front of the
+ * chunk and the whole table was dropped — silently, producing false
+ * HALLUCINATED_TABLE errors for every table after the first comment.
+ *
+ * String literals and quoted identifiers are preserved verbatim: a `--` or `/*`
+ * inside '...', "..." or `...` is data, not a comment. Doubled quotes ('') are
+ * handled as the standard SQL escape. Block comments collapse to a single space
+ * so they cannot fuse the tokens on either side.
+ */
+export function stripSqlComments(sql: string): string {
+  let out = '';
+  let quote: string | null = null;
+  let i = 0;
+
+  while (i < sql.length) {
+    const c = sql[i];
+    const next = sql[i + 1];
+
+    if (quote) {
+      out += c;
+      if (c === quote) {
+        if (next === quote) {
+          // Escaped quote ('' or "") — consume both, stay inside the literal.
+          out += next;
+          i += 2;
+          continue;
+        }
+        quote = null;
+      }
+      i += 1;
+      continue;
+    }
+
+    if (c === "'" || c === '"' || c === '`') {
+      quote = c;
+      out += c;
+      i += 1;
+      continue;
+    }
+
+    if (c === '-' && next === '-') {
+      // Line comment: skip to the newline, which the next iteration copies so
+      // line structure (and any statement on the following line) survives.
+      while (i < sql.length && sql[i] !== '\n') i += 1;
+      continue;
+    }
+
+    if (c === '/' && next === '*') {
+      i += 2;
+      while (i < sql.length && !(sql[i] === '*' && sql[i + 1] === '/')) i += 1;
+      i += 2; // past the closing */ (past end if unterminated, which ends the loop)
+      out += ' ';
+      continue;
+    }
+
+    out += c;
+    i += 1;
+  }
+
+  return out;
+}
+
 export function parseDDL(ddl: string, dialect: ParserDialect = 'postgresql'): SchemaDefinition {
   const tables: SchemaTable[] = [];
 
-  const createStatements = ddl
+  const createStatements = stripSqlComments(ddl)
     .split(/;\s*/)
     .filter((s) => s.trim().toUpperCase().startsWith('CREATE TABLE'));
 
