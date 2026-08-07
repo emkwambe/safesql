@@ -41,7 +41,7 @@ Enforcement runs *beside* dbt, in one of three places:
 # .pre-commit-config.yaml
 repos:
   - repo: https://github.com/mpingosystems/safesql
-    rev: v0.9.1
+    rev: dbt-safesql-v0.1.0
     hooks:
       - id: safesql-validate
         args: [--threshold=70, --dialect=postgres]
