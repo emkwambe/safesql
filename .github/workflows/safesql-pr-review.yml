@@ -27,5 +27,7 @@ jobs:
           # block = failed check blocks the merge; warn = comment only
           comment_mode: block
           dialect: postgresql
-          # Optional: give the engine a schema so column-level detectors fire.
-          # schema_file: db/schema.sql
+          # Required for cardinality-aware detectors. Without a schema the
+          # engine only sees structure: a fan-out aggregate scores 100 and the
+          # bot posts "no issues found".
+          schema_file: test-queries/schema.sql

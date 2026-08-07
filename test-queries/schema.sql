@@ -12,3 +12,9 @@ CREATE TABLE orders (
   total_amount NUMERIC(12,2),
   order_date DATE
 );
+CREATE TABLE user_events (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES users(id),
+  event_type TEXT,
+  occurred_at TIMESTAMPTZ
+);
