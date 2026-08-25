@@ -1,0 +1,54 @@
+{
+  "name": "@safesqlpro/sdk",
+  "version": "0.1.0",
+  "description": "Official SDK for SafeSQL Pro \u00e2\u20ac\u201d semantic SQL validation",
+  "license": "Apache-2.0",
+  "author": "Mpingo Systems LLC",
+  "homepage": "https://safesqlpro.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpingosystems/safesql.git",
+    "directory": "sdk"
+  },
+  "keywords": [
+    "sql",
+    "validation",
+    "linter",
+    "dbt",
+    "data-quality",
+    "safesql"
+  ],
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "~6.0.2"
+  }
+}

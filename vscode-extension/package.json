@@ -1,0 +1,103 @@
+{
+  "name": "safesql-pro",
+  "displayName": "SafeSQL Pro",
+  "description": "Semantic SQL validation \u2014 catches logic errors linters miss",
+  "version": "0.1.0",
+  "publisher": "mpingosystems",
+  "license": "Apache-2.0",
+  "icon": "icon.png",
+  "homepage": "https://safesqlpro.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpingosystems/safesql.git",
+    "directory": "vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/mpingosystems/safesql/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "sql",
+    "linter",
+    "data-quality",
+    "dbt",
+    "safesql"
+  ],
+  "activationEvents": [
+    "onLanguage:sql"
+  ],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "typecheck": "tsc -p ./ --noEmit",
+    "bundle": "esbuild src/extension.ts --bundle --platform=node --target=node20 --format=cjs --external:vscode --outfile=dist/extension.js",
+    "compile": "npm run typecheck && npm run bundle",
+    "watch": "npm run bundle -- --watch",
+    "vscode:prepublish": "npm run compile",
+    "package": "npm run compile && vsce package"
+  },
+  "devDependencies": {
+    "@safesqlpro/sdk": "file:../sdk",
+    "@types/node": "^24.12.2",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "~6.0.2"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "SafeSQL Pro",
+      "properties": {
+        "safesql.apiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Your SafeSQL Pro API key (get one at [safesqlpro.dev/settings](https://safesqlpro.dev/settings)). The `SAFESQL_PRO_API_KEY` environment variable takes precedence."
+        },
+        "safesql.threshold": {
+          "type": "number",
+          "default": 70,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Score below which validation is considered failing (0-100)."
+        },
+        "safesql.dialect": {
+          "type": "string",
+          "default": "postgresql",
+          "enum": [
+            "postgresql",
+            "mysql",
+            "bigquery",
+            "snowflake"
+          ],
+          "description": "SQL dialect used for parsing and dialect-specific detectors."
+        },
+        "safesql.validateOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Validate SQL files automatically on save."
+        },
+        "safesql.schemaFile": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a DDL schema file, relative to the workspace root. Unlocks the schema-aware detectors."
+        },
+        "safesql.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Override the SafeSQL Pro API origin. Leave empty to use https://safesqlpro.dev."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "safesql.validate",
+        "title": "SafeSQL Pro: Validate Current File"
+      }
+    ]
+  }
+}
