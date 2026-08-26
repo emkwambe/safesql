@@ -92,17 +92,29 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
     async authenticate(token) {
       if (!token) return { ok: false };
       const keyHash = await hashApiKey(token);
+      // The plan comes from users.plan, NOT api_keys.plan.
+      //
+      // api_keys.plan is stamped when the key is minted and never updated —
+      // nothing in the Stripe webhook touches it (webhook.ts patches
+      // users.plan only). Trusting it would mean a customer who upgrades keeps
+      // the 12-detector free gate and the free rate limit until they rotate
+      // their key, and a customer who cancels keeps all 33 forever. users.plan
+      // is the live value the billing webhook maintains, so join through to it.
       const { data } = await supabase
         .from('api_keys')
-        .select('user_id, plan, revoked_at')
+        .select('user_id, revoked_at, users!inner(plan)')
         .eq('key_hash', keyHash)
         .maybeSingle();
       if (!data || data.revoked_at) return { ok: false };
+      // supabase-js types an embedded to-one relation as an array in some
+      // versions; normalise both shapes.
+      const embedded = (data as { users?: { plan?: string } | { plan?: string }[] }).users;
+      const livePlan = (Array.isArray(embedded) ? embedded[0]?.plan : embedded?.plan) ?? 'free';
       void supabase
         .from('api_keys')
         .update({ last_used_at: new Date().toISOString() })
         .eq('key_hash', keyHash);
-      return { ok: true, userId: data.user_id as string, plan: data.plan as string };
+      return { ok: true, userId: data.user_id as string, plan: livePlan };
     },
     async checkUsage(userId, plan) {
       const month = new Date().toISOString().slice(0, 7); // YYYY-MM

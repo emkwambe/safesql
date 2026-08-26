@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
-  FREE_DETECTORS,
+  FREE_DETECTOR_SLUGS,
   FREE_DETECTOR_COUNT,
-  PRO_DETECTORS,
+  PRO_DETECTOR_SLUGS,
   TOTAL_DETECTORS,
   gatedDetectorCount,
   getDetectorsForTier,
@@ -31,25 +31,25 @@ GROUP BY c.plan;
 
 describe('detector tier lists', () => {
   it('free tier has exactly 12 detectors, no duplicates', () => {
-    expect(FREE_DETECTORS).toHaveLength(12);
-    expect(new Set(FREE_DETECTORS).size).toBe(12);
+    expect(FREE_DETECTOR_SLUGS).toHaveLength(12);
+    expect(new Set(FREE_DETECTOR_SLUGS).size).toBe(12);
     expect(FREE_DETECTOR_COUNT).toBe(12);
   });
 
   it('pro tier has all 33 built-in detectors, no duplicates', () => {
-    expect(PRO_DETECTORS).toHaveLength(33);
-    expect(new Set(PRO_DETECTORS).size).toBe(33);
+    expect(PRO_DETECTOR_SLUGS).toHaveLength(33);
+    expect(new Set(PRO_DETECTOR_SLUGS).size).toBe(33);
     expect(TOTAL_DETECTORS).toBe(33);
   });
 
   it('pro is a strict superset of free', () => {
-    for (const id of FREE_DETECTORS) expect(PRO_DETECTORS).toContain(id);
-    expect(PRO_DETECTORS.length).toBeGreaterThan(FREE_DETECTORS.length);
+    for (const id of FREE_DETECTOR_SLUGS) expect(PRO_DETECTOR_SLUGS).toContain(id);
+    expect(PRO_DETECTOR_SLUGS.length).toBeGreaterThan(FREE_DETECTOR_SLUGS.length);
   });
 
   it('excludes CUSTOM_RULE and SYNTAX_ERROR from the counted set', () => {
-    expect(PRO_DETECTORS).not.toContain('CUSTOM_RULE');
-    expect(PRO_DETECTORS).not.toContain('SYNTAX_ERROR');
+    expect(PRO_DETECTOR_SLUGS).not.toContain('CUSTOM_RULE');
+    expect(PRO_DETECTOR_SLUGS).not.toContain('SYNTAX_ERROR');
   });
 
   it('maps every paid tier to the full set', () => {
@@ -89,7 +89,7 @@ describe('validateSQL tier gating', () => {
     const free = validateSQL({ sql: FANOUT_SQL, schema, dialect: 'postgresql', tier: 'free' });
     const ids = [...free.errors, ...free.warnings, ...free.suggestions].map((i) => i.id);
     expect(ids).not.toContain('AGGREGATE_OVER_FANOUT_JOIN');
-    for (const id of ids) expect(FREE_DETECTORS).toContain(id);
+    for (const id of ids) expect(FREE_DETECTOR_SLUGS).toContain(id);
   });
 
   it('scores the free result only from the detectors that ran', () => {
@@ -124,7 +124,7 @@ describe('validateSQL tier gating', () => {
 
   it('never names a gated detector in the upgrade prompt', () => {
     const free = validateSQL({ sql: FANOUT_SQL, schema, dialect: 'postgresql', tier: 'free' });
-    const gated = PRO_DETECTORS.filter((d) => !FREE_DETECTORS.includes(d));
+    const gated = PRO_DETECTOR_SLUGS.filter((d) => !FREE_DETECTOR_SLUGS.includes(d));
     for (const id of gated) expect(free.upgradePrompt ?? '').not.toContain(id);
   });
 

@@ -19,7 +19,7 @@ export type PlanTier = 'free' | 'pro' | 'team' | 'business' | 'enterprise';
 
 // The 12 free core detectors. Each line records the Sprint 5C prompt name it
 // satisfies, so the plan doc and the code can be reconciled later.
-export const FREE_DETECTORS: DetectorId[] = [
+export const FREE_DETECTOR_SLUGS: DetectorId[] = [
   'CARTESIAN_JOIN',            // prompt: CARTESIAN_PRODUCT + MISSING_JOIN_CONDITION (both describe this)
   'CROSS_JOIN_RISK',           // prompt: CROSS_JOIN_WITHOUT_LIMIT
   'JOIN_MULTIPLICATION',       // prompt: FANOUT_JOIN — the basic row-multiplication warning.
@@ -43,8 +43,8 @@ export const FREE_DETECTORS: DetectorId[] = [
 // it is a Business-tier engine driven by caller-supplied rules, not a built-in
 // detector. SYNTAX_ERROR is excluded because it is a parse-failure fallback and
 // is never gated (see ungatedDetectors below).
-export const PRO_DETECTORS: DetectorId[] = [
-  ...FREE_DETECTORS,
+export const PRO_DETECTOR_SLUGS: DetectorId[] = [
+  ...FREE_DETECTOR_SLUGS,
   'AGGREGATE_OVER_FANOUT_JOIN',
   'MULTIPLE_ONE_TO_MANY_JOINS',
   'AGGREGATION_GRAIN_MISMATCH',
@@ -71,8 +71,8 @@ export const PRO_DETECTORS: DetectorId[] = [
 // Total built-in detector count. Single source of truth for every UI string —
 // import this rather than hardcoding a number, so the count can never drift
 // from the implementation again.
-export const TOTAL_DETECTORS = PRO_DETECTORS.length;
-export const FREE_DETECTOR_COUNT = FREE_DETECTORS.length;
+export const TOTAL_DETECTORS = PRO_DETECTOR_SLUGS.length;
+export const FREE_DETECTOR_COUNT = FREE_DETECTOR_SLUGS.length;
 
 // Never gated, on any tier:
 //   SYNTAX_ERROR — a parse failure, not a detection. Gating it would leave a
@@ -82,7 +82,7 @@ export const FREE_DETECTOR_COUNT = FREE_DETECTORS.length;
 const UNGATED: ReadonlySet<string> = new Set<DetectorId>(['SYNTAX_ERROR', 'CUSTOM_RULE']);
 
 export function getDetectorsForTier(tier: PlanTier): DetectorId[] {
-  return tier === 'free' ? FREE_DETECTORS : PRO_DETECTORS;
+  return tier === 'free' ? FREE_DETECTOR_SLUGS : PRO_DETECTOR_SLUGS;
 }
 
 // True when `id` is allowed to produce a finding on `tier`.

@@ -69,6 +69,33 @@ describe('status bar', () => {
     expect(tip).toContain('Score 25/100 — CRITICAL');
     expect(tip).toContain('1 error(s), 1 warning(s), 1 suggestion(s)');
   });
+
+  // ── Sprint 5C — detector coverage surfaced from the API response ───────────
+  const freeResult = {
+    ...result,
+    tier: 'free',
+    detectorsRun: Array.from({ length: 12 }, (_, i) => `DET_${i}`),
+    upgradePrompt: '2 additional findings were detected by Pro-only checks.',
+  };
+
+  it('appends the detector count when the tier ran a narrowed set', () => {
+    expect(statusBarText(freeResult)).toBe('SafeSQL: 25 CRITICAL (12/33)');
+  });
+
+  it('leaves the label untouched when all detectors ran', () => {
+    const pro = { ...result, tier: 'pro', detectorsRun: Array.from({ length: 33 }, (_, i) => `D${i}`) };
+    expect(statusBarText(pro)).toBe('SafeSQL: 25 CRITICAL');
+  });
+
+  it('leaves the label untouched when the API sent no coverage info', () => {
+    expect(statusBarText(result)).toBe('SafeSQL: 25 CRITICAL');
+  });
+
+  it('tooltip discloses the narrowed coverage and the upgrade prompt', () => {
+    const tip = statusBarTooltip(freeResult);
+    expect(tip).toContain('12 detectors active (free tier)');
+    expect(tip).toContain('Pro-only checks');
+  });
 });
 
 describe('findToken', () => {

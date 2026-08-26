@@ -29,9 +29,16 @@ export function formatIssueMessage(issue: Issue): string {
   return lines.join('\n');
 }
 
-/** Status bar label, e.g. "SafeSQL: 25 CRITICAL". */
-export function statusBarText(result: ValidationResult): string {
-  return `SafeSQL: ${result.score} ${result.verdict}`;
+/**
+ * Status bar label, e.g. "SafeSQL: 25 CRITICAL" — or, on a gated free key,
+ * "SafeSQL: 25 CRITICAL (12/33)" so the narrowed coverage is visible at a
+ * glance rather than only on hover. Paid keys keep the original label.
+ */
+export function statusBarText(result: ValidationResult, totalDetectors = 33): string {
+  const base = `SafeSQL: ${result.score} ${result.verdict}`;
+  const run = result.detectorsRun?.length;
+  if (run !== undefined && run < totalDetectors) return `${base} (${run}/${totalDetectors})`;
+  return base;
 }
 
 /** Status bar tooltip — issue counts by severity. */
