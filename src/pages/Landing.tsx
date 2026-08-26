@@ -83,22 +83,87 @@ export function LandingPage() {
         </div>
       </nav>
 
-      {/* HERO */}
-      <section style={{ ...section, paddingTop: 80, paddingBottom: 60, textAlign: 'center' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto' }}>
-          <h1 style={h1}>
+      {/* HERO — five layers: hook, category+trust, action promise,
+          belonging+judgment, CTA. Sized so all five clear the fold on a
+          typical desktop viewport (~630px used above 800px). */}
+      <section style={{ ...section, paddingTop: 56, paddingBottom: 44, textAlign: 'center' }}>
+        <div style={{ maxWidth: 780, margin: '0 auto' }}>
+          {/* L1 — hook */}
+          <h1 style={h1}>SQL that runs is the most dangerous SQL.</h1>
+
+          {/* L2 — category + trust */}
+          <p
+            style={{
+              fontSize: 20,
+              color: '#a1a1aa',
+              lineHeight: 1.5,
+              marginTop: 18,
+              marginBottom: 0,
+            }}
+          >
+            Semantic SQL validation — before execution.
+            <br />
+            <span style={{ color: '#d4d4d8' }}>
+              Deterministic: rules fire or they don't. No AI guesswork.
+            </span>
+          </p>
+
+          {/* L3 — action promise */}
+          <p
+            style={{
+              fontSize: 17,
+              color: '#e4e4e7',
+              fontWeight: 600,
+              lineHeight: 1.45,
+              marginTop: 20,
+              marginBottom: 0,
+            }}
+          >
             Catch dangerous SQL before it runs.
             <br />
             <span style={{ color: '#a78bfa' }}>Prove how every finding was resolved.</span>
-          </h1>
-          <p style={subhead}>
-            33 deterministic detectors for human- and AI-written SQL — integrated with dbt,
-            CI/CD and the tools your team already uses.
           </p>
-          <p style={{ fontSize: 13, color: '#71717a', marginTop: 10 }}>
-            From local detection to team enforcement and audit-ready evidence.
+
+          {/* L4 — belonging + judgment + action */}
+          <p style={{ fontSize: 14, color: '#a1a1aa', lineHeight: 1.6, marginTop: 22, marginBottom: 10 }}>
+            SafeSQL Pro runs deterministic detectors on human- and AI-written SQL.
           </p>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 28 }}>
+          <ul
+            style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: '0 auto',
+              maxWidth: 560,
+              textAlign: 'left',
+              display: 'grid',
+              gap: 7,
+            }}
+          >
+            {[
+              'Your dbt models, CI pipeline, VS Code, and pre-commit — already covered',
+              'Catches the JOIN that inflates the revenue report below by 2.8× before it runs',
+              'Every finding logged, resolved, and audit-ready',
+            ].map((line) => (
+              <li
+                key={line}
+                style={{
+                  fontSize: 13.5,
+                  color: '#d4d4d8',
+                  lineHeight: 1.5,
+                  paddingLeft: 20,
+                  position: 'relative',
+                }}
+              >
+                <span style={{ position: 'absolute', left: 0, color: '#7c3aed', fontWeight: 700 }}>
+                  ✓
+                </span>
+                {line}
+              </li>
+            ))}
+          </ul>
+
+          {/* L5 — CTAs */}
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 26 }}>
             <a href="#/editor" style={{ ...ctaButton, padding: '12px 22px', fontSize: 14 }}>
               Validate your SQL free →
             </a>
@@ -106,7 +171,7 @@ export function LandingPage() {
               See it in action
             </a>
           </div>
-          <div style={{ marginTop: 18, fontSize: 12, color: '#71717a' }}>
+          <div style={{ marginTop: 14, fontSize: 12, color: '#71717a' }}>
             No credit card. 50 free validations per month.
           </div>
         </div>
@@ -791,12 +856,6 @@ const h2: React.CSSProperties = {
   textAlign: 'center',
 };
 
-const subhead: React.CSSProperties = {
-  fontSize: 18,
-  color: '#a1a1aa',
-  lineHeight: 1.55,
-  marginTop: 18,
-};
 
 const demoSubhead: React.CSSProperties = {
   fontSize: 14,
