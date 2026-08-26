@@ -40,7 +40,7 @@ for the row-count proof.
 ```bash
 npm install
 npm run dev          # Vite dev server
-npm test             # vitest — 22 detector + sandbox tests
+npm test             # vitest — 413 detector, gating + sandbox tests
 npm run build        # type-check + production build
 npm run deploy       # build + wrangler pages deploy
 ```

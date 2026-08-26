@@ -98,7 +98,7 @@ export function CustomRulesPage() {
   return (
     <Shell>
       <h1 style={{ fontSize: 22 }}>Custom Rules</h1>
-      <p style={{ color: '#a1a1aa', fontSize: 13 }}>Encode your team's SQL policy on top of the 33+ semantic detectors.</p>
+      <p style={{ color: '#a1a1aa', fontSize: 13 }}>Encode your team's SQL policy on top of the 33 semantic detectors.</p>
 
       <h2 style={{ fontSize: 14, color: '#a1a1aa', marginTop: 16 }}>Describe a rule</h2>
       <div style={card}>

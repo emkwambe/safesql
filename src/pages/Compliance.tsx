@@ -28,6 +28,6 @@ const SECTIONS = [
   { title: 'Security', body: 'HTTPS enforced on every request (Cloudflare). API keys are stored only as SHA-256 hashes — the raw key is shown once and never persisted.' },
   { title: 'Availability', body: 'Served on Cloudflare Pages + Workers global edge network with their platform SLA. The detection engine is deterministic and runs in-region with no external dependency.' },
   { title: 'Confidentiality', body: 'Schema DDL is not stored — only a SHA-256 hash of the validated SQL is kept for the audit trail. No production data passes through SafeSQL Pro.' },
-  { title: 'Processing Integrity', body: 'Detection is deterministic AST rules — 33+ semantic detectors that either fire or do not. No AI makes a detection decision, so there are no hallucinated findings.' },
+  { title: 'Processing Integrity', body: 'Detection is deterministic AST rules — 33 semantic detectors that either fire or do not. No AI makes a detection decision, so there are no hallucinated findings.' },
   { title: 'Audit trail', body: 'Every validation is logged with user, timestamp, score, and issue types (append-only audit_log). Managers can export the full team trail as CSV.' },
 ];
