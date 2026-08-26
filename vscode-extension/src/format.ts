@@ -37,11 +37,19 @@ export function statusBarText(result: ValidationResult): string {
 /** Status bar tooltip — issue counts by severity. */
 export function statusBarTooltip(result: ValidationResult): string {
   const count = (s: Issue['severity']) => result.issues.filter((i) => i.severity === s).length;
-  return [
+  const lines = [
     `Score ${result.score}/100 — ${result.verdict}`,
     `${count('error')} error(s), ${count('warning')} warning(s), ${count('suggestion')} suggestion(s)`,
-    'Click to re-validate',
-  ].join('\n');
+  ];
+  // Sprint 5C — the extension reads the tier off the API response. Free keys run
+  // a narrowed detector set, so say so rather than letting a thin result read as
+  // a clean query.
+  if (result.tier === 'free' && result.detectorsRun) {
+    lines.push(`${result.detectorsRun.length} detectors active (free tier)`);
+  }
+  if (result.upgradePrompt) lines.push(result.upgradePrompt);
+  lines.push('Click to re-validate');
+  return lines.join('\n');
 }
 
 export interface Span {

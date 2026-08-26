@@ -12,6 +12,11 @@ import { SandboxPanel } from '../components/SandboxPanel';
 import { UpgradeBanner } from '../components/UpgradeBanner';
 import { SaveQueryButton } from '../components/SaveQueryButton';
 import { validateSQL } from '../services/sqlValidator';
+import {
+  FREE_DETECTOR_COUNT,
+  TOTAL_DETECTORS,
+  type PlanTier,
+} from '../config/detectorTiers';
 import { parseDDL } from '../services/schemaParser';
 import { enrichWithAIExplanations } from '../services/aiExplainer';
 import { persistValidation } from '../services/persistValidation';
@@ -214,6 +219,9 @@ export function EditorPage() {
   const { team } = useTeam();
   const overLimit = isOverValidationLimit(appUser);
   const isPro = !!appUser && appUser.plan !== 'free';
+  // Sprint 5C — free users run the 12 core detectors; Pro+ runs all 33. Signed-out
+  // visitors are treated as free.
+  const tier: PlanTier = isPro ? (appUser!.plan as PlanTier) : 'free';
 
   // Sprint 10 — request approval for a risky query (team users only).
   const [approvalOpen, setApprovalOpen] = useState(false);
@@ -245,7 +253,7 @@ export function EditorPage() {
     // briefly show last validation's errors against this validation's SQL.
     setReport(null);
 
-    let next = validateSQL({ sql, schema: schema ?? undefined, dialect, source });
+    let next = validateSQL({ sql, schema: schema ?? undefined, dialect, source, tier });
     setReport(next);
     setLastValidatedAt(new Date());
 
@@ -267,7 +275,7 @@ export function EditorPage() {
         if (ok) void refreshAppUser(); // pull updated count
       });
     }
-  }, [sql, schema, dialect, source, aiEnabled, appUser, activeSchemaId, refreshAppUser, overLimit]);
+  }, [sql, schema, dialect, source, tier, aiEnabled, appUser, activeSchemaId, refreshAppUser, overLimit]);
 
   // PQ4 — apply a mechanical fix, rewrite the editor, and re-validate.
   const handleApplyFix = useCallback(
@@ -275,7 +283,7 @@ export function EditorPage() {
       const next = applyFix(sql, issue);
       if (!next || next === sql) return;
       setSql(next);
-      const nextReport = validateSQL({ sql: next, schema: schema ?? undefined, dialect, source });
+      const nextReport = validateSQL({ sql: next, schema: schema ?? undefined, dialect, source, tier });
       setReport(nextReport);
       setLastValidatedAt(new Date());
       if (appUser?.id && !overLimit) {
@@ -305,7 +313,7 @@ export function EditorPage() {
     }
     if (next === sql) return;
     setSql(next);
-    const nextReport = validateSQL({ sql: next, schema: schema ?? undefined, dialect, source });
+    const nextReport = validateSQL({ sql: next, schema: schema ?? undefined, dialect, source, tier });
     setReport(nextReport);
     setLastValidatedAt(new Date());
     if (appUser?.id && !overLimit) {
@@ -319,7 +327,7 @@ export function EditorPage() {
         if (ok) void refreshAppUser();
       });
     }
-  }, [report, sql, schema, dialect, source, appUser, overLimit, activeSchemaId, refreshAppUser]);
+  }, [report, sql, schema, dialect, source, tier, appUser, overLimit, activeSchemaId, refreshAppUser]);
 
   const handleValidationFromEditor = (next: Report) => {
     setReport(next);
@@ -584,6 +592,36 @@ export function EditorPage() {
             >
               ▶ Validate this query — see what's wrong
             </button>
+          </div>
+        )}
+        {/* Sprint 5C — detector coverage strip. Always visible on free so the
+            gating is disclosed before validation, not discovered after it. The
+            upgrade line only appears when findings were actually withheld, and
+            never names the gated detectors. */}
+        {!isPro && (
+          <div
+            style={{
+              margin: '0 0 12px',
+              padding: '10px 12px',
+              background: '#18181b',
+              border: '1px solid #27272a',
+              borderRadius: 8,
+              fontSize: 12,
+              color: '#a1a1aa',
+            }}
+          >
+            <strong style={{ color: '#e4e4e7' }}>
+              {FREE_DETECTOR_COUNT} of {TOTAL_DETECTORS} detectors active
+            </strong>
+            {report?.upgradePrompt && (
+              <div style={{ marginTop: 6, color: '#fbbf24' }}>{report.upgradePrompt}</div>
+            )}
+            <a
+              href="#/pricing"
+              style={{ display: 'inline-block', marginTop: 6, color: '#a78bfa', fontWeight: 600 }}
+            >
+              Upgrade to run all {TOTAL_DETECTORS} →
+            </a>
           </div>
         )}
         <ValidationReport

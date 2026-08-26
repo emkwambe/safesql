@@ -1,6 +1,7 @@
 import { validateSQL } from './sqlValidator';
 import { parseDDL } from './schemaParser';
 import type { ValidationIssue, ValidationReport } from '../types/validation';
+import type { PlanTier } from '../config/detectorTiers';
 
 // Shared engine for the CLI and the GitHub Action. Both are thin wrappers around
 // this — the validator logic lives ONLY in sqlValidator.ts (no duplication).
@@ -26,9 +27,12 @@ export function validateSqlSource(
   sql: string,
   schemaSql?: string,
   dialect: CliDialect = 'postgresql',
+  // Sprint 5C — omit for the full detector set. The REST API passes the caller's
+  // plan; the CLI and GitHub Action run the local engine and pass nothing.
+  tier?: PlanTier,
 ): ValidationReport {
   const schema = schemaSql && schemaSql.trim() ? parseDDL(schemaSql, dialect) : undefined;
-  return validateSQL({ sql, schema, dialect });
+  return validateSQL({ sql, schema, dialect, tier });
 }
 
 export function exitCodeFor(report: ValidationReport, failOnWarnings = false): number {

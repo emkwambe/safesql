@@ -35,6 +35,10 @@ interface RawReport {
   warnings?: RawIssue[];
   suggestions?: RawIssue[];
   error?: string;
+  // Sprint 5C — tier transparency fields returned by POST /api/validate.
+  tier?: string;
+  detectorsRun?: string[];
+  upgradePrompt?: string;
 }
 
 /**
@@ -78,6 +82,11 @@ export function toValidationResult(report: RawReport, threshold: number): Valida
     verdict: verdictFor(score),
     issues,
     executionTime: typeof report.processingMs === 'number' ? report.processingMs : 0,
+    // Sprint 5C — tier transparency. Passed through verbatim so a consumer can
+    // tell "clean query" apart from "not checked for that".
+    tier: typeof report.tier === 'string' ? report.tier : undefined,
+    detectorsRun: Array.isArray(report.detectorsRun) ? report.detectorsRun : undefined,
+    upgradePrompt: typeof report.upgradePrompt === 'string' ? report.upgradePrompt : undefined,
   };
 }
 

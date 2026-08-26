@@ -25,6 +25,36 @@ describe('POST /api/validate', () => {
     expect(json.detectorVersion).toBeTruthy();
   });
 
+  // ── Sprint 5C — the plan on the API key decides the detector set ───────────
+  it('pro key runs all 33 detectors and reports the tier', async () => {
+    const res = await handleValidate(req({ sql: 'SELECT 1' }), okAuth);
+    const json = await res.json();
+    expect(json.tier).toBe('pro');
+    expect(json.detectorsRun).toHaveLength(33);
+  });
+
+  it('free key runs only the 12 core detectors', async () => {
+    const deps: ValidateDeps = {
+      authenticate: async () => ({ ok: true, userId: 'u1', plan: 'free' }),
+      checkUsage: async () => ({ ok: true }),
+    };
+    const res = await handleValidate(req({ sql: 'SELECT 1' }), deps);
+    const json = await res.json();
+    expect(json.tier).toBe('free');
+    expect(json.detectorsRun).toHaveLength(12);
+  });
+
+  it('an unrecognised plan falls back to free rather than unlocking everything', async () => {
+    const deps: ValidateDeps = {
+      authenticate: async () => ({ ok: true, userId: 'u1', plan: 'legacy_grandfathered' }),
+      checkUsage: async () => ({ ok: true }),
+    };
+    const res = await handleValidate(req({ sql: 'SELECT 1' }), deps);
+    const json = await res.json();
+    expect(json.tier).toBe('free');
+    expect(json.detectorsRun).toHaveLength(12);
+  });
+
   it('missing sql field → 400', async () => {
     const res = await handleValidate(req({ dialect: 'postgresql' }), okAuth);
     expect(res.status).toBe(400);

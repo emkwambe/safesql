@@ -32,6 +32,12 @@ export interface ValidationResult {
   issues: Issue[];
   /** Server-side detection time in milliseconds. */
   executionTime: number;
+  /** Plan the API ran this validation under. Free runs a narrowed detector set. */
+  tier?: string;
+  /** issueType strings that were eligible to run for that tier. */
+  detectorsRun?: string[];
+  /** Present only when a narrowed tier withheld findings on this query. */
+  upgradePrompt?: string;
 }
 
 export interface ValidateParams {

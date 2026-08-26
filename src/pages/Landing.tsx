@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
+import { FREE_DETECTOR_COUNT, TOTAL_DETECTORS } from '../config/detectorTiers';
 import type { SchemaDefinition, ValidationReport as Report } from '../types/validation';
 // Lazy: the demo editor loads Monaco. Deferring it lets the landing page paint
 // and Clerk initialize before Monaco's chunk + CDN runtime are fetched.
@@ -293,7 +294,7 @@ export function PricingSection() {
           tier="Free"
           price="$0"
           period="forever"
-          features={['50 validations/month', 'All 33+ detectors', 'Monaco editor sandbox']}
+          features={[`${FREE_DETECTOR_COUNT} core detectors`, '50 validations/month', 'Monaco editor sandbox']}
           cta="Start free"
           href="#/editor"
         />
@@ -302,7 +303,7 @@ export function PricingSection() {
           price={monthly ? '$49' : '$470'}
           period={monthly ? 'per month' : 'per year'}
           highlight
-          features={['Unlimited validations', 'AI explanations', 'Apply-fix button', 'Schema connections', 'Query library', 'Shareable permalinks']}
+          features={[`All ${TOTAL_DETECTORS} detectors`, 'Unlimited validations', 'AI explanations', 'Apply-fix button', 'Schema connections', 'Query library', 'Shareable permalinks']}
           cta={busyPlan === 'pro' || !isClerkReady ? 'Loading…' : 'Upgrade to Pro'}
           onUpgrade={() => void handleUpgrade('pro')}
           disabled={busyPlan !== null || !isClerkReady}
@@ -312,7 +313,7 @@ export function PricingSection() {
           tier="Team"
           price={monthly ? '$199' : '$1,910'}
           period={monthly ? 'per month · 5 seats' : 'per year · 5 seats'}
-          features={['Everything in Pro', '5 seats', 'Team analytics', 'Approval workflow', 'Shared query library', 'GitHub Action']}
+          features={['Everything in Pro', '5 seats (enforcement coming soon)', 'Team analytics', 'Approval workflow', 'Shared query library', 'GitHub Action']}
           cta={busyPlan === 'team' || !isClerkReady ? 'Loading…' : 'Start team trial'}
           onUpgrade={() => void handleUpgrade('team')}
           disabled={busyPlan !== null || !isClerkReady}
@@ -322,7 +323,7 @@ export function PricingSection() {
           tier="Business"
           price={monthly ? '$599' : '$5,750'}
           period={monthly ? 'per month · 20 seats' : 'per year · 20 seats'}
-          features={['Everything in Team', '20 seats', 'Audit log', 'Custom rules', 'CSV export', 'Slack alerts', 'SOC 2 alignment']}
+          features={['Everything in Team', '20 seats (enforcement coming soon)', 'Audit log', 'Custom rules', 'CSV export', 'Slack alerts (beta)', 'SOC 2 alignment']}
           cta={busyPlan === 'business' || !isClerkReady ? 'Loading…' : 'Start with Business'}
           onUpgrade={() => void handleUpgrade('business')}
           disabled={busyPlan !== null || !isClerkReady}

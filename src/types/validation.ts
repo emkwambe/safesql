@@ -1,3 +1,5 @@
+import type { PlanTier } from '../config/detectorTiers';
+
 export type SqlSource = 'cursor' | 'copilot' | 'chatgpt' | 'manual' | 'unknown';
 
 export interface ValidationRequest {
@@ -11,6 +13,10 @@ export interface ValidationRequest {
   // Sprint 8 Part 5 — team custom rules, evaluated after the built-in detectors.
   // The caller (Business tier) supplies these; omit them to skip evaluation.
   customRules?: CustomRule[];
+  // Sprint 5C — the plan whose detector set should run. Omit for the full set:
+  // every internal caller and every pre-5C test gets all detectors unchanged.
+  // Only 'free' narrows the run to FREE_DETECTORS.
+  tier?: PlanTier;
 }
 
 export type CustomRuleType =
@@ -41,6 +47,15 @@ export interface ValidationReport {
   // PQ1 — carried through from the request so the source badge displays and the
   // tag persists inside the stored report JSON (no extra DB column required).
   source?: SqlSource;
+  // ── Sprint 5C — tier transparency ─────────────────────────────────────────
+  // Which detectors were actually eligible to run for this request's tier.
+  // Always present, so an API consumer can tell a clean query apart from a
+  // query that simply wasn't checked for the thing that would have flagged it.
+  detectorsRun?: DetectorId[];
+  // Set only when a narrowed tier withheld detectors that DID have findings on
+  // this query. Absent when nothing was withheld or nothing gated fired — an
+  // upgrade nudge is only honest when there is a real, withheld finding.
+  upgradePrompt?: string;
 }
 
 export interface ValidationIssue {

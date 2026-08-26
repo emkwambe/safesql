@@ -8,6 +8,12 @@ import type {
 } from '../types/validation';
 import { unwrapName } from './schemaParser';
 import { evaluateCustomRules } from './customRuleEngine';
+import {
+  TOTAL_DETECTORS,
+  getDetectorsForTier,
+  isDetectorEnabled,
+  type PlanTier,
+} from '../config/detectorTiers';
 
 const parser = new Parser();
 
@@ -114,23 +120,45 @@ export function validateSQL(request: ValidationRequest): ValidationReport {
     issues.push(...evaluateCustomRules(request.sql, ast, request.schema, request.customRules));
   }
 
+  // ── Sprint 5C: free/pro detector gating ────────────────────────────────────
+  // Every detector still RUNS; findings from detectors the tier doesn't include
+  // are dropped here. Running them all costs microseconds and is what lets the
+  // upgrade prompt say something true ("3 findings withheld") instead of
+  // guessing. The score is then calculated only from the findings that survived,
+  // exactly as if the gated detectors had never run.
+  const tier: PlanTier = request.tier ?? 'pro';
+  const detectorsRun = getDetectorsForTier(tier);
+  const withheld = issues.filter((i) => !isDetectorEnabled(i.id, tier));
+  const visible = withheld.length > 0 ? issues.filter((i) => isDetectorEnabled(i.id, tier)) : issues;
+
   // Issue Object Contract (§10): make sure every finding carries the offending
   // anchor fields + a scoreImpact, deriving them from legacy `metadata`/severity
   // when a detector didn't set them explicitly.
-  for (const issue of issues) normalizeIssueContract(issue);
+  for (const issue of visible) normalizeIssueContract(issue);
 
-  const errors = issues.filter((i) => i.severity === 'error');
-  const warnings = issues.filter((i) => i.severity === 'warning');
-  const suggestions = issues.filter((i) => i.severity === 'suggestion');
+  const errors = visible.filter((i) => i.severity === 'error');
+  const warnings = visible.filter((i) => i.severity === 'warning');
+  const suggestions = visible.filter((i) => i.severity === 'suggestion');
 
   return {
-    riskScore: calculateRiskScore(issues),
+    riskScore: calculateRiskScore(visible),
     executionSafe: errors.length === 0,
     errors,
     warnings,
     suggestions,
     processingMs: performance.now() - start,
     source: request.source,
+    detectorsRun,
+    // Only nudge when findings were genuinely withheld. Never names the gated
+    // detectors — the count is the motivation, per the Sprint 5C spec.
+    ...(withheld.length > 0
+      ? {
+          upgradePrompt:
+            `${withheld.length} additional ${withheld.length === 1 ? 'finding' : 'findings'} ` +
+            `${withheld.length === 1 ? 'was' : 'were'} detected by Pro-only checks. ` +
+            `Upgrade to run all ${TOTAL_DETECTORS} detectors.`,
+        }
+      : {}),
   };
 }
 

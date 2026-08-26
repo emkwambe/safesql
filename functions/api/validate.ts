@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import type { Env } from '../_shared';
 import { validateSqlSource, type CliDialect } from '../../src/services/fileValidation';
 import { hashApiKey, PLAN_API_LIMITS } from '../../src/services/apiKeys';
+import type { PlanTier } from '../../src/config/detectorTiers';
 
 // Sprint 7 Part 3 — REST API. POST /api/validate runs the same 33-detector
 // engine server-side, behind Bearer API-key auth + per-plan monthly rate limits.
@@ -11,6 +12,10 @@ import { hashApiKey, PLAN_API_LIMITS } from '../../src/services/apiKeys';
 // Supabase service-role-backed deps for the Workers runtime.
 
 const DETECTOR_VERSION = '0.5.0';
+
+// Plans that unlock the full detector set. Anything else — including a missing
+// or unrecognised plan string — is treated as free.
+const PAID_PLANS: ReadonlySet<string> = new Set(['pro', 'team', 'business', 'enterprise']);
 const SETTINGS_URL = 'https://safesqlpro.dev/settings';
 const PRICING_URL = 'https://safesqlpro.dev/pricing';
 
@@ -68,8 +73,12 @@ export async function handleValidate(request: Request, deps: ValidateDeps): Prom
 
   const ddl = typeof body.ddl === 'string' ? body.ddl : undefined;
   const dialect = (typeof body.dialect === 'string' ? body.dialect : 'postgresql') as CliDialect;
-  const report = validateSqlSource(body.sql, ddl, dialect);
-  return jsonRes({ ...report, detectorVersion: DETECTOR_VERSION }, 200);
+  // Sprint 5C — the caller's plan decides the detector set. Anything that isn't
+  // a recognised paid plan falls back to 'free', so an unknown/blank plan
+  // narrows the run rather than silently unlocking all 33.
+  const tier: PlanTier = PAID_PLANS.has(auth.plan) ? (auth.plan as PlanTier) : 'free';
+  const report = validateSqlSource(body.sql, ddl, dialect, tier);
+  return jsonRes({ ...report, tier, detectorVersion: DETECTOR_VERSION }, 200);
 }
 
 // ── Cloudflare Pages Function wrappers ───────────────────────────────────────
