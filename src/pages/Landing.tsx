@@ -86,10 +86,17 @@ export function LandingPage() {
       {/* HERO */}
       <section style={{ ...section, paddingTop: 80, paddingBottom: 60, textAlign: 'center' }}>
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
-          <h1 style={h1}>SQL that runs is the most dangerous SQL.</h1>
+          <h1 style={h1}>
+            Catch dangerous SQL before it runs.
+            <br />
+            <span style={{ color: '#a78bfa' }}>Prove how every finding was resolved.</span>
+          </h1>
           <p style={subhead}>
-            It doesn't crash. It doesn't warn you. It quietly returns wrong numbers
-            that drive real decisions.
+            33 deterministic detectors for human- and AI-written SQL — integrated with dbt,
+            CI/CD and the tools your team already uses.
+          </p>
+          <p style={{ fontSize: 13, color: '#71717a', marginTop: 10 }}>
+            From local detection to team enforcement and audit-ready evidence.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 28 }}>
             <a href="#/editor" style={{ ...ctaButton, padding: '12px 22px', fontSize: 14 }}>
@@ -105,6 +112,9 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* BENCHMARK STATS */}
+      <StatsBar />
+
       {/* THE PROBLEM */}
       <section style={section}>
         <h2 style={h2}>Three things you should know</h2>
@@ -118,8 +128,8 @@ export function LandingPage() {
             text="of AI-generated SQL has a semantic error. The BIRD benchmark caps best LLMs at 75% accuracy."
           />
           <ProblemCard
-            stat="$3.1T"
-            text="lost annually to bad data. Most originates from queries that returned wrong-but-valid results."
+            stat="501"
+            text="spurious findings our own benchmark caught in our detectors — fixed before we published the results."
           />
         </div>
       </section>
@@ -202,6 +212,9 @@ export function LandingPage() {
         </p>
       </section>
 
+      {/* PROGRESSION */}
+      <ProgressionSection />
+
       {/* PRICING */}
       <PricingSection />
 
@@ -250,6 +263,184 @@ function StepCard({ num, title, body }: { num: number; title: string; body: stri
   );
 }
 
+// ── Benchmark stats bar (Sprint 5A) ─────────────────────────────────────────
+// Every figure is measured and links to /benchmark where it can be checked.
+// Precision is attributed to the labelled suites only — Spider and BIRD label
+// no defects, so they cannot contribute a true or false positive.
+const BENCH_STATS: Array<{ value: string; label: string }> = [
+  { value: '33', label: 'detectors — deterministic AST, no ML' },
+  { value: '5', label: 'surfaces — CLI, VS Code, GitHub Action, dbt, pre-commit' },
+  { value: '0.70 ms', label: 'median validation time across 2,654 benchmark queries' },
+  { value: '76.4%', label: 'precision on 86 labelled queries; 2,654 total in the benchmark' },
+];
+
+function StatsBar() {
+  return (
+    <section style={{ ...section, paddingTop: 0, paddingBottom: 40 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
+          gap: 12,
+        }}
+      >
+        {BENCH_STATS.map((s) => (
+          <div key={s.label} style={{ ...card, textAlign: 'center', padding: 16 }}>
+            <div style={{ fontSize: 26, fontWeight: 800, color: '#a78bfa' }}>{s.value}</div>
+            <div style={{ color: '#a1a1aa', fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>
+              {s.label}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p style={{ textAlign: 'center', marginTop: 14, fontSize: 12.5, color: '#71717a' }}>
+        Measured on 2,654 queries.{' '}
+        <a href="#/benchmark" style={{ color: '#a78bfa', fontWeight: 600 }}>
+          View full methodology →
+        </a>
+      </p>
+    </section>
+  );
+}
+
+// ── Progression: local → team → audit-ready (Sprint 5A) ─────────────────────
+const TIERS = [
+  {
+    icon: '⌘',
+    kicker: 'Local (Free)',
+    body: 'Catch logic errors before you push. 12 core detectors. CLI and VS Code.',
+    example: 'Caught: JOIN multiplication on revenue query',
+  },
+  {
+    icon: '⇄',
+    kicker: 'Team (Pro + Team)',
+    body: 'Enforce SQL quality across your repository. All 33 detectors. CI enforcement. Retained validation history.',
+    example: 'Enforced: 0 broken SQL merged this sprint',
+  },
+  {
+    icon: '⛊',
+    kicker: 'Audit-ready (Business)',
+    body: 'Demonstrate what was checked, what failed, how it was resolved, and who approved it. Compliance exports. Approval workflows. Role-based team access.',
+    example: 'Proved: every financial query validated before the audit period',
+  },
+];
+
+function ProgressionSection() {
+  return (
+    <section style={section}>
+      <h2 style={h2}>One platform. Three levels of control.</h2>
+      <div style={cardGrid}>
+        {TIERS.map((t) => (
+          <div key={t.kicker} style={card}>
+            <div style={{ fontSize: 22, color: '#7c3aed', marginBottom: 8 }}>{t.icon}</div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#e4e4e7', marginBottom: 8 }}>
+              {t.kicker}
+            </div>
+            <div style={{ color: '#a1a1aa', fontSize: 13, lineHeight: 1.6, marginBottom: 12 }}>
+              {t.body}
+            </div>
+            <div
+              style={{
+                borderLeft: '2px solid #7c3aed',
+                paddingLeft: 10,
+                color: '#d4d4d8',
+                fontSize: 12.5,
+                lineHeight: 1.5,
+                fontStyle: 'italic',
+              }}
+            >
+              {t.example}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Comparison table (Sprint 5A) ────────────────────────────────────────────
+// SQLFluff and SQLSure are separated deliberately: they are different tools,
+// and collapsing them into one column invites a reader to dismiss the whole
+// table. Every cell is checkable against the vendors' own documentation.
+const COMPARE_COLS = ['SQLFluff', 'SQLSure', 'Soda / Monte Carlo', 'SafeSQL Pro'];
+const COMPARE_ROWS: Array<[string, string, string, string, string]> = [
+  ['When it runs', 'Before execution', 'Before execution', 'After data lands', 'Before execution'],
+  ['What it checks', 'Syntax + style', 'Query semantics', 'Data values & metrics', 'Query semantics'],
+  ['Detector breadth', 'Style rules', '9 rules', 'Metric monitors', '33 detectors'],
+  ['Fan-out aggregate detection', '✗', '✓', '✗', '✓'],
+  ['dbt integration', '✓', '✓', '✓', '✓'],
+  ['CI enforcement', '✓', '✓', '✓', '✓'],
+  ['Synthetic proof of row inflation', '✗', '✗', '✗', '✓'],
+  ['Hosted audit evidence trail', '✗', 'Self-hosted recipe', 'Partial', '✓ (Team+)'],
+  ['Price', 'Free / open source', 'Free / open source', '$750–$2,000+/mo', '$0–$599/mo'],
+];
+
+function ComparisonTable() {
+  const cell: React.CSSProperties = {
+    padding: '9px 12px',
+    fontSize: 12.5,
+    borderBottom: '1px solid #1f1f23',
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+  };
+  return (
+    <div style={{ maxWidth: 900, margin: '0 auto 28px' }}>
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 680 }}>
+          <thead>
+            <tr>
+              <th style={{ ...cell, textAlign: 'left', color: '#a1a1aa', fontWeight: 600 }} />
+              {COMPARE_COLS.map((c) => (
+                <th
+                  key={c}
+                  style={{
+                    ...cell,
+                    color: c === 'SafeSQL Pro' ? '#a78bfa' : '#a1a1aa',
+                    fontWeight: 700,
+                    borderBottom: '1px solid #27272a',
+                  }}
+                >
+                  {c}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {COMPARE_ROWS.map((r) => (
+              <tr key={r[0]}>
+                <td style={{ ...cell, textAlign: 'left', color: '#d4d4d8' }}>{r[0]}</td>
+                {r.slice(1).map((v, i) => (
+                  <td
+                    key={i}
+                    style={{
+                      ...cell,
+                      color: i === 3 ? '#e4e4e7' : '#a1a1aa',
+                      fontWeight: i === 3 ? 600 : 400,
+                      background: i === 3 ? '#141417' : undefined,
+                    }}
+                  >
+                    {v}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p style={{ color: '#71717a', fontSize: 12, lineHeight: 1.7, marginTop: 10 }}>
+        SQLSure detects fan-out aggregates and ships dbt and CI integrations — we do not claim
+        otherwise. Our differentiators are detector breadth (33 vs 9), executable synthetic proof of
+        row inflation, and a hosted, retained audit trail with approvals. Every SafeSQL Pro entry is
+        measured on our{' '}
+        <a href="#/benchmark" style={{ color: '#a78bfa' }}>
+          public benchmark
+        </a>
+        .
+      </p>
+    </div>
+  );
+}
+
 export function PricingSection() {
   const { appUser, isClerkReady } = useAppUser();
   const [cadence, setCadence] = useState<'monthly' | 'annual'>('monthly');
@@ -274,8 +465,12 @@ export function PricingSection() {
     <section id="pricing" style={section}>
       <h2 style={h2}>Pricing</h2>
       <p style={{ ...demoSubhead, marginBottom: 18 }}>
-        DevTools pricing for data teams. Annual billing saves 20%.
+        From local detection to team enforcement and audit-ready evidence.
+        <br />
+        Annual billing saves 20%.
       </p>
+
+      <ComparisonTable />
 
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 22 }}>
         <div style={{ display: 'inline-flex', background: '#0f0f10', border: '1px solid #27272a', borderRadius: 999, padding: 4 }}>
@@ -295,6 +490,21 @@ export function PricingSection() {
           </button>
         </div>
       </div>
+
+      <p
+        style={{
+          textAlign: 'center',
+          color: '#a1a1aa',
+          fontSize: 13.5,
+          lineHeight: 1.7,
+          maxWidth: 620,
+          margin: '0 auto 20px',
+        }}
+      >
+        <strong style={{ color: '#e4e4e7' }}>Start free.</strong> 12 core detectors, CLI and
+        pre-commit — no account required. VS Code and CI need a free API key. Upgrade for all 33
+        detectors, CI enforcement, and team controls.
+      </p>
 
       <div style={pricingGrid}>
         <PricingCard
