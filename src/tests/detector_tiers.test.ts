@@ -139,6 +139,49 @@ describe('validateSQL tier gating', () => {
     expect(ids.some((id) => id === 'CARTESIAN_JOIN' || id === 'CROSS_JOIN_RISK')).toBe(true);
   });
 
+  // ── Comma joins (found by the seeded benchmark, Phase 1) ──────────────────
+  // `FROM a, b` with nothing relating the tables is a true Cartesian product.
+  // It was previously invisible to the detector and scored a clean 100.
+  it('flags a comma join with no relating condition', () => {
+    const r = validateSQL({
+      sql: 'SELECT c.id, p.amount FROM customers c, payments p;',
+      schema,
+      dialect: 'postgresql',
+    });
+    expect(r.errors.map((i) => i.id)).toContain('CARTESIAN_JOIN');
+    expect(r.riskScore).toBeLessThan(50);
+  });
+
+  it('does NOT flag a comma join related in WHERE (pre-ANSI-92 join)', () => {
+    const r = validateSQL({
+      sql: 'SELECT c.id, p.amount FROM customers c, payments p WHERE p.customer_id = c.id;',
+      schema,
+      dialect: 'postgresql',
+    });
+    const ids = [...r.errors, ...r.warnings, ...r.suggestions].map((i) => i.id);
+    expect(ids).not.toContain('CARTESIAN_JOIN');
+  });
+
+  it('does not flag a single-table FROM as a comma join', () => {
+    const r = validateSQL({
+      sql: 'SELECT c.id FROM customers c;',
+      schema,
+      dialect: 'postgresql',
+    });
+    expect([...r.errors, ...r.warnings].map((i) => i.id)).not.toContain('CARTESIAN_JOIN');
+  });
+
+  it('gates the comma-join finding on the free tier like any CARTESIAN_JOIN', () => {
+    const r = validateSQL({
+      sql: 'SELECT c.id, p.amount FROM customers c, payments p;',
+      schema,
+      dialect: 'postgresql',
+      tier: 'free',
+    });
+    // CARTESIAN_JOIN is in the free 12, so it must still fire.
+    expect(r.errors.map((i) => i.id)).toContain('CARTESIAN_JOIN');
+  });
+
   it('still reports a syntax error on the free tier', () => {
     const free = validateSQL({ sql: 'SELEKT * FROM', dialect: 'postgresql', tier: 'free' });
     expect(free.errors.map((i) => i.id)).toContain('SYNTAX_ERROR');

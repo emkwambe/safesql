@@ -1,0 +1,339 @@
+{
+  "suite": "seeded",
+  "schema": "schema.sql",
+  "dialect": "postgresql",
+  "detector_count": 33,
+  "methodology": "../METHODOLOGY.md",
+  "cases": [
+    {
+      "detector": "MISSING_WHERE_DESTRUCTIVE",
+      "note": "DELETE with no WHERE removes every row.",
+      "defect": "defects/MISSING_WHERE_DESTRUCTIVE.sql",
+      "clean": "clean/MISSING_WHERE_DESTRUCTIVE.sql",
+      "defect_expect_fires": [
+        "MISSING_WHERE_DESTRUCTIVE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "INCOMPLETE_GROUP_BY",
+      "note": "country is projected but not grouped.",
+      "defect": "defects/INCOMPLETE_GROUP_BY.sql",
+      "clean": "clean/INCOMPLETE_GROUP_BY.sql",
+      "defect_expect_fires": [
+        "INCOMPLETE_GROUP_BY"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "CONTRADICTORY_FILTER",
+      "note": "plan cannot be both 'free' and 'pro'; returns zero rows.",
+      "defect": "defects/CONTRADICTORY_FILTER.sql",
+      "clean": "clean/CONTRADICTORY_FILTER.sql",
+      "defect_expect_fires": [
+        "CONTRADICTORY_FILTER"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "JOIN_MULTIPLICATION",
+      "note": "One-to-many join duplicates each customer row per payment.",
+      "defect": "defects/JOIN_MULTIPLICATION.sql",
+      "clean": "clean/JOIN_MULTIPLICATION.sql",
+      "defect_expect_fires": [
+        "JOIN_MULTIPLICATION"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "SELECT_STAR_EXPENSIVE",
+      "note": "Unqualified SELECT * in the final projection.",
+      "defect": "defects/SELECT_STAR_EXPENSIVE.sql",
+      "clean": "clean/SELECT_STAR_EXPENSIVE.sql",
+      "defect_expect_fires": [
+        "SELECT_STAR_EXPENSIVE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "INNER_JOIN_NULL_EXCLUSION",
+      "note": "INNER JOIN on a nullable FK silently drops unmatched payments.",
+      "defect": "defects/INNER_JOIN_NULL_EXCLUSION.sql",
+      "clean": "clean/INNER_JOIN_NULL_EXCLUSION.sql",
+      "defect_expect_fires": [
+        "INNER_JOIN_NULL_EXCLUSION"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "AGGREGATION_GRAIN_MISMATCH",
+      "note": "Aggregate across a join with no GROUP BY.",
+      "defect": "defects/AGGREGATION_GRAIN_MISMATCH.sql",
+      "clean": "clean/AGGREGATION_GRAIN_MISMATCH.sql",
+      "defect_expect_fires": [
+        "AGGREGATION_GRAIN_MISMATCH"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "HALLUCINATED_TABLE",
+      "note": "Table 'invoices' is not in the schema.",
+      "defect": "defects/HALLUCINATED_TABLE.sql",
+      "clean": "clean/HALLUCINATED_TABLE.sql",
+      "defect_expect_fires": [
+        "HALLUCINATED_TABLE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "HALLUCINATED_COLUMN",
+      "note": "Column 'lifetime_value' does not exist on customers.",
+      "defect": "defects/HALLUCINATED_COLUMN.sql",
+      "clean": "clean/HALLUCINATED_COLUMN.sql",
+      "defect_expect_fires": [
+        "HALLUCINATED_COLUMN"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "NULL_EQUALITY_COMPARISON",
+      "note": "= NULL never matches any row.",
+      "defect": "defects/NULL_EQUALITY_COMPARISON.sql",
+      "clean": "clean/NULL_EQUALITY_COMPARISON.sql",
+      "defect_expect_fires": [
+        "NULL_EQUALITY_COMPARISON"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "NOT_IN_NULLABLE",
+      "note": "NOT IN over a nullable column returns zero rows if any NULL is present.",
+      "defect": "defects/NOT_IN_NULLABLE.sql",
+      "clean": "clean/NOT_IN_NULLABLE.sql",
+      "defect_expect_fires": [
+        "NOT_IN_NULLABLE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "AVG_OVER_NULLABLE",
+      "note": "AVG skips NULL amounts, changing the denominator.",
+      "defect": "defects/AVG_OVER_NULLABLE.sql",
+      "clean": "clean/AVG_OVER_NULLABLE.sql",
+      "defect_expect_fires": [
+        "AVG_OVER_NULLABLE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "UNKNOWN_ALIAS",
+      "note": "Alias 'x' is never defined.",
+      "defect": "defects/UNKNOWN_ALIAS.sql",
+      "clean": "clean/UNKNOWN_ALIAS.sql",
+      "defect_expect_fires": [
+        "UNKNOWN_ALIAS"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "AMBIGUOUS_COLUMN",
+      "note": "'plan' exists on both customers and subscriptions.",
+      "defect": "defects/AMBIGUOUS_COLUMN.sql",
+      "clean": "clean/AMBIGUOUS_COLUMN.sql",
+      "defect_expect_fires": [
+        "AMBIGUOUS_COLUMN"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "LEFT_JOIN_FILTERED_IN_WHERE",
+      "note": "WHERE on the right table silently converts LEFT JOIN to INNER.",
+      "defect": "defects/LEFT_JOIN_FILTERED_IN_WHERE.sql",
+      "clean": "clean/LEFT_JOIN_FILTERED_IN_WHERE.sql",
+      "defect_expect_fires": [
+        "LEFT_JOIN_FILTERED_IN_WHERE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "SUSPICIOUS_JOIN_KEY",
+      "note": "Joining two unrelated surrogate keys.",
+      "defect": "defects/SUSPICIOUS_JOIN_KEY.sql",
+      "clean": "clean/SUSPICIOUS_JOIN_KEY.sql",
+      "defect_expect_fires": [
+        "SUSPICIOUS_JOIN_KEY"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "CARTESIAN_JOIN",
+      "note": "Implicit cross product via comma join with no predicate.",
+      "defect": "defects/CARTESIAN_JOIN.sql",
+      "clean": "clean/CARTESIAN_JOIN.sql",
+      "defect_expect_fires": [
+        "CARTESIAN_JOIN"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "CROSS_JOIN_RISK",
+      "note": "Explicit CROSS JOIN produces N x M rows.",
+      "defect": "defects/CROSS_JOIN_RISK.sql",
+      "clean": "clean/CROSS_JOIN_RISK.sql",
+      "defect_expect_fires": [
+        "CROSS_JOIN_RISK"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "AGGREGATE_OVER_FANOUT_JOIN",
+      "note": "FLAGSHIP. Copied verbatim from the product demo query in Editor.tsx.",
+      "defect": "defects/AGGREGATE_OVER_FANOUT_JOIN.sql",
+      "clean": "clean/AGGREGATE_OVER_FANOUT_JOIN.sql",
+      "defect_expect_fires": [
+        "AGGREGATE_OVER_FANOUT_JOIN"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "MULTIPLE_ONE_TO_MANY_JOINS",
+      "note": "Chasm trap: two child tables cross-multiply.",
+      "defect": "defects/MULTIPLE_ONE_TO_MANY_JOINS.sql",
+      "clean": "clean/MULTIPLE_ONE_TO_MANY_JOINS.sql",
+      "defect_expect_fires": [
+        "MULTIPLE_ONE_TO_MANY_JOINS"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "SCD_JOIN_WITHOUT_EFFECTIVE_DATE",
+      "note": "SCD dimension joined without a validity window.",
+      "defect": "defects/SCD_JOIN_WITHOUT_EFFECTIVE_DATE.sql",
+      "clean": "clean/SCD_JOIN_WITHOUT_EFFECTIVE_DATE.sql",
+      "defect_expect_fires": [
+        "SCD_JOIN_WITHOUT_EFFECTIVE_DATE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "INTEGER_DIVISION_RISK",
+      "note": "INT / INT truncates toward zero.",
+      "defect": "defects/INTEGER_DIVISION_RISK.sql",
+      "clean": "clean/INTEGER_DIVISION_RISK.sql",
+      "defect_expect_fires": [
+        "INTEGER_DIVISION_RISK"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "COUNT_PARENT_AFTER_CHILD_JOIN",
+      "note": "COUNT(*) counts joined payment rows, not customers.",
+      "defect": "defects/COUNT_PARENT_AFTER_CHILD_JOIN.sql",
+      "clean": "clean/COUNT_PARENT_AFTER_CHILD_JOIN.sql",
+      "defect_expect_fires": [
+        "COUNT_PARENT_AFTER_CHILD_JOIN"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "COUNT_STAR_VS_COUNT_COL",
+      "note": "COUNT(country) silently skips NULL countries.",
+      "defect": "defects/COUNT_STAR_VS_COUNT_COL.sql",
+      "clean": "clean/COUNT_STAR_VS_COUNT_COL.sql",
+      "defect_expect_fires": [
+        "COUNT_STAR_VS_COUNT_COL"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "HAVING_WITHOUT_GROUP_BY",
+      "note": "HAVING with no GROUP BY.",
+      "defect": "defects/HAVING_WITHOUT_GROUP_BY.sql",
+      "clean": "clean/HAVING_WITHOUT_GROUP_BY.sql",
+      "defect_expect_fires": [
+        "HAVING_WITHOUT_GROUP_BY"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "MISSING_TIME_FILTER",
+      "note": "Unbounded scan of an append-only event table.",
+      "defect": "defects/MISSING_TIME_FILTER.sql",
+      "clean": "clean/MISSING_TIME_FILTER.sql",
+      "defect_expect_fires": [
+        "MISSING_TIME_FILTER"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "DIALECT_MISMATCH",
+      "note": "QUALIFY is Snowflake/BigQuery syntax, not PostgreSQL.",
+      "defect": "defects/DIALECT_MISMATCH.sql",
+      "clean": "clean/DIALECT_MISMATCH.sql",
+      "defect_expect_fires": [
+        "DIALECT_MISMATCH"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "NON_DETERMINISTIC_WINDOW_ORDER",
+      "note": "ORDER BY created_at has no tie-breaker; ties order arbitrarily.",
+      "defect": "defects/NON_DETERMINISTIC_WINDOW_ORDER.sql",
+      "clean": "clean/NON_DETERMINISTIC_WINDOW_ORDER.sql",
+      "defect_expect_fires": [
+        "NON_DETERMINISTIC_WINDOW_ORDER"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "DESTRUCTIVE_DDL",
+      "note": "DROP TABLE is irreversible.",
+      "defect": "defects/DESTRUCTIVE_DDL.sql",
+      "clean": "clean/DESTRUCTIVE_DDL.sql",
+      "defect_expect_fires": [
+        "DESTRUCTIVE_DDL"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "DESTRUCTIVE_TRUNCATE",
+      "note": "TRUNCATE removes every row.",
+      "defect": "defects/DESTRUCTIVE_TRUNCATE.sql",
+      "clean": "clean/DESTRUCTIVE_TRUNCATE.sql",
+      "defect_expect_fires": [
+        "DESTRUCTIVE_TRUNCATE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "COALESCE_IN_JOIN_KEY",
+      "note": "COALESCE in the ON clause defeats the index and inflates matches.",
+      "defect": "defects/COALESCE_IN_JOIN_KEY.sql",
+      "clean": "clean/COALESCE_IN_JOIN_KEY.sql",
+      "defect_expect_fires": [
+        "COALESCE_IN_JOIN_KEY"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "IMPLICIT_TIMEZONE",
+      "note": "TIMESTAMP compared to a timezone-naive string literal.",
+      "defect": "defects/IMPLICIT_TIMEZONE.sql",
+      "clean": "clean/IMPLICIT_TIMEZONE.sql",
+      "defect_expect_fires": [
+        "IMPLICIT_TIMEZONE"
+      ],
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "WINDOW_MISSING_ORDER",
+      "note": "Window function with no ORDER BY at all.",
+      "defect": "defects/WINDOW_MISSING_ORDER.sql",
+      "clean": "clean/WINDOW_MISSING_ORDER.sql",
+      "defect_expect_fires": [
+        "WINDOW_MISSING_ORDER"
+      ],
+      "clean_expect_fires": []
+    }
+  ]
+}

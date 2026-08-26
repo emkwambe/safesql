@@ -1,0 +1,159 @@
+SafeSQL Pro benchmark - human review queue - dataset: seeded
+Generated 2026-08-26 16:28 UTC
+
+Every entry below fired a detector that the ground truth did not expect.
+Classify each against METHODOLOGY.md sec.3 (the five ambiguous cases) and
+sec.4.1 (fan-out family co-firing). A firing on a CLEAN control is a
+candidate false positive. A co-firing on a DEFECT is usually a correct
+second finding, but must be confirmed, not assumed.
+
+Final FP count pending manual review.
+========================================================================
+
+[defect/INCOMPLETE_GROUP_BY]  kind=defect
+  expected : INCOMPLETE_GROUP_BY
+  fired    : INCOMPLETE_GROUP_BY, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/INCOMPLETE_GROUP_BY]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/JOIN_MULTIPLICATION]  kind=defect
+  expected : JOIN_MULTIPLICATION
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/AGGREGATION_GRAIN_MISMATCH]  kind=defect
+  expected : AGGREGATION_GRAIN_MISMATCH
+  fired    : AGGREGATION_GRAIN_MISMATCH, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/AMBIGUOUS_COLUMN]  kind=defect
+  expected : AMBIGUOUS_COLUMN
+  fired    : AMBIGUOUS_COLUMN, INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/AMBIGUOUS_COLUMN]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/LEFT_JOIN_FILTERED_IN_WHERE]  kind=defect
+  expected : LEFT_JOIN_FILTERED_IN_WHERE
+  fired    : JOIN_MULTIPLICATION, LEFT_JOIN_FILTERED_IN_WHERE
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/LEFT_JOIN_FILTERED_IN_WHERE]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/SUSPICIOUS_JOIN_KEY]  kind=defect
+  expected : SUSPICIOUS_JOIN_KEY
+  fired    : JOIN_MULTIPLICATION, SUSPICIOUS_JOIN_KEY
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/SUSPICIOUS_JOIN_KEY]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/CROSS_JOIN_RISK]  kind=defect
+  expected : CROSS_JOIN_RISK
+  fired    : CROSS_JOIN_RISK, JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/CROSS_JOIN_RISK]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/AGGREGATE_OVER_FANOUT_JOIN]  kind=defect
+  expected : AGGREGATE_OVER_FANOUT_JOIN
+  fired    : AGGREGATE_OVER_FANOUT_JOIN, IMPLICIT_TIMEZONE, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: IMPLICIT_TIMEZONE, INNER_JOIN_NULL_EXCLUSION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/MULTIPLE_ONE_TO_MANY_JOINS]  kind=defect
+  expected : MULTIPLE_ONE_TO_MANY_JOINS
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION, MULTIPLE_ONE_TO_MANY_JOINS
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/MULTIPLE_ONE_TO_MANY_JOINS]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/SCD_JOIN_WITHOUT_EFFECTIVE_DATE]  kind=defect
+  expected : SCD_JOIN_WITHOUT_EFFECTIVE_DATE
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION, SCD_JOIN_WITHOUT_EFFECTIVE_DATE
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/SCD_JOIN_WITHOUT_EFFECTIVE_DATE]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/COUNT_PARENT_AFTER_CHILD_JOIN]  kind=defect
+  expected : COUNT_PARENT_AFTER_CHILD_JOIN
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/COUNT_PARENT_AFTER_CHILD_JOIN]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/COALESCE_IN_JOIN_KEY]  kind=defect
+  expected : COALESCE_IN_JOIN_KEY
+  fired    : COALESCE_IN_JOIN_KEY, JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/COALESCE_IN_JOIN_KEY]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+

@@ -52,8 +52,11 @@ describe('parseDDL — CHECK constraint integration', () => {
 
 describe('sandbox — CHECK-constrained columns generate respecting values', () => {
   // PGlite WASM init plus DDL exec runs ~3-4s in isolation; under parallel
-  // contention with sandbox.test.ts it can creep past the 5s default.
-  it('does not violate the user-reported users_status_check constraint', { timeout: 20_000 }, async () => {
+  // contention with sandbox.test.ts it can creep past the 5s default. Observed
+  // intermittently exceeding 20s on a loaded machine (roughly 1 run in 4), which
+  // made the whole gate flaky, so the ceiling is 60s. This is a wall-clock guard
+  // against a hang, not an assertion about performance.
+  it('does not violate the user-reported users_status_check constraint', { timeout: 60_000 }, async () => {
     resetSandboxState();
     const ddl = `
       CREATE TABLE users (

@@ -12,6 +12,7 @@ import { ApprovalInboxPage } from './pages/ApprovalInbox';
 import { CompliancePage } from './pages/Compliance';
 import { AuditLogPage } from './pages/AuditLog';
 import { CustomRulesPage } from './pages/CustomRules';
+import { BenchmarkPage } from './pages/Benchmark';
 import { BlogPage } from './pages/Blog';
 import { TeamSetupPage } from './pages/TeamSetup';
 import { TeamMembersPage } from './pages/TeamMembers';
@@ -28,7 +29,7 @@ type Route =
   | 'landing' | 'editor' | 'pricing' | 'share' | 'analytics' | 'settings'
   | 'team-analytics' | 'team-approvals' | 'team-audit' | 'compliance' | 'team-rules' | 'blog'
   | 'team-setup' | 'team-members' | 'team-join' | 'library' | 'launch'
-  | 'privacy' | 'terms' | 'security' | 'dpa' | 'sub-processors';
+  | 'privacy' | 'terms' | 'security' | 'dpa' | 'sub-processors' | 'benchmark';
 
 function routeFromLocation(): Route {
   // New short-URL permalink is a real path: /v/{id} (served via _redirects SPA
@@ -51,6 +52,7 @@ function routeFromLocation(): Route {
   if (h.startsWith('/sub-processors')) return 'sub-processors';
   if (h.startsWith('/dpa')) return 'dpa';
   if (h.startsWith('/compliance')) return 'compliance';
+  if (h.startsWith('/benchmark')) return 'benchmark';
   if (h.startsWith('/blog')) return 'blog';
   if (h.startsWith('/analytics')) return 'analytics';
   if (h.startsWith('/settings')) return 'settings';
@@ -117,6 +119,8 @@ function App() {
       return <DPAPage />;
     case 'sub-processors':
       return <SubProcessorsPage />;
+    case 'benchmark':
+      return <BenchmarkPage />;
     case 'blog':
       return <BlogPage />;
     default:

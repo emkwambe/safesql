@@ -98,7 +98,7 @@ export function validateSQL(request: ValidationRequest): ValidationReport {
   issues.push(...detectCartesianAndCrossJoin(ast));
   issues.push(...detectLeftJoinFilteredInWhere(ast));
   issues.push(...detectSuspiciousJoinKey(ast, request.schema));
-  issues.push(...detectFanOutJoins(ast));
+  issues.push(...detectFanOutJoins(ast, request.schema));
   issues.push(...detectScdJoinWithoutEffectiveDate(ast));
   issues.push(...detectIntegerDivision(ast, request.schema));
   issues.push(...detectCountParentAfterChildJoin(ast));
@@ -383,6 +383,51 @@ function extractAndEqualityConditions(node: any, out: Map<string, Set<string>>):
   }
 }
 
+
+// ── Identifier comparison (case-insensitive) ────────────────────────────────
+// Unquoted SQL identifiers are case-insensitive: PostgreSQL folds them to
+// lower case, so CREATE TABLE t (Name TEXT) creates a column named "name" and
+// both `SELECT Name` and `SELECT name` resolve to it. Comparing raw strings
+// meant a CamelCase schema (SQL Server, Snowflake, most ORM-generated DDL)
+// reported every lower-case reference as hallucinated. Found by the Spider
+// benchmark, where it produced 627 spurious findings.
+//
+// Original casing is preserved everywhere it is shown to a user - only the
+// comparison is normalised.
+function identEq(a: string | null | undefined, b: string | null | undefined): boolean {
+  return !!a && !!b && a.toLowerCase() === b.toLowerCase();
+}
+
+function identSet(names: Iterable<string>): Set<string> {
+  const out = new Set<string>();
+  for (const n of names) if (n) out.add(n.toLowerCase());
+  return out;
+}
+
+function hasIdent(set: Set<string>, name: string | null | undefined): boolean {
+  return !!name && set.has(name.toLowerCase());
+}
+
+function findTable(schema: SchemaDefinition | undefined, name: string | null | undefined) {
+  if (!schema || !name) return undefined;
+  return schema.tables.find((t) => identEq(t.name, name));
+}
+
+function findColumn<C extends { name: string }>(
+  table: { columns: C[] } | undefined | null,
+  name: string | null | undefined,
+): C | undefined {
+  if (!table || !name) return undefined;
+  return table.columns.find((c) => identEq(c.name, name));
+}
+
+function hasColumn<C extends { name: string }>(
+  table: { columns: C[] } | undefined | null,
+  name: string | null | undefined,
+): boolean {
+  return !!findColumn(table, name);
+}
+
 // ── D1: JOIN multiplication (schema optional) ───────────────────────────────
 function detectJoinMultiplication(ast: any, schema?: SchemaDefinition): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
@@ -420,7 +465,7 @@ function detectJoinMultiplication(ast: any, schema?: SchemaDefinition): Validati
 
 function isOneToManyRelationship(joinTableName: string | undefined, schema: SchemaDefinition): boolean {
   if (!joinTableName) return true;
-  const t = schema.tables.find((x) => x.name === joinTableName);
+  const t = findTable(schema, joinTableName);
   if (!t) return true;
   return t.columns.some((c) => c.isFK);
 }
@@ -443,7 +488,7 @@ function detectSelectStar(ast: any, schema?: SchemaDefinition, dialect?: string)
     const tables: string[] = (stmt.from || []).map((f: any) => f.table).filter(Boolean);
 
     for (const tableName of tables) {
-      const schemaTable = schema?.tables.find((t) => t.name === tableName);
+      const schemaTable = findTable(schema, tableName);
       const isLarge = !!(schemaTable?.estimatedRows && schemaTable.estimatedRows > 1_000_000);
       const lower = tableName.toLowerCase();
       const isColumnar = COLUMNAR_HINTS.some((name) => lower.includes(name));
@@ -490,7 +535,7 @@ function detectInnerJoinNullExclusion(ast: any, schema?: SchemaDefinition): Vali
     );
 
     // Build alias → real-table-name lookup from FROM list
-    const aliasMap = new Map<string, string>();
+    const aliasMap = new Map<string, string>(); // keys stored lower-cased
     for (const f of stmt.from || []) {
       if (f.table) {
         if (f.as) aliasMap.set(f.as, f.table);
@@ -506,11 +551,11 @@ function detectInnerJoinNullExclusion(ast: any, schema?: SchemaDefinition): Vali
       for (const node of candidates) {
         const col = getColumnName(node);
         const tblQualifier = getColumnTable(node);
-        const realTable = tblQualifier ? aliasMap.get(tblQualifier) ?? tblQualifier : join.table;
+        const realTable = tblQualifier ? aliasMap.get(tblQualifier?.toLowerCase()) ?? tblQualifier : join.table;
         if (!col || !realTable) continue;
 
-        const schemaTable = schema.tables.find((t) => t.name === realTable);
-        const schemaCol = schemaTable?.columns.find((c) => c.name === col);
+        const schemaTable = findTable(schema, realTable);
+        const schemaCol = findColumn(schemaTable, col);
 
         if (schemaCol?.nullable && schemaCol?.isFK) {
           issues.push({
@@ -600,7 +645,7 @@ function unwrapCteName(cte: any): string | null {
 function detectHallucinatedTable(ast: any, schema?: SchemaDefinition): ValidationIssue[] {
   if (!schema) return [];
   const issues: ValidationIssue[] = [];
-  const known = new Set(schema.tables.map((t) => t.name));
+  const known = identSet(schema.tables.map((t) => t.name));
 
   for (const stmt of asStatements(ast)) {
     if (!stmt) continue;
@@ -608,8 +653,8 @@ function detectHallucinatedTable(ast: any, schema?: SchemaDefinition): Validatio
     const seen = new Set<string>(); // dedupe per statement
 
     const flag = (name: string) => {
-      if (!name || seen.has(name) || known.has(name) || local.has(name)) return;
-      seen.add(name);
+      if (!name || hasIdent(seen, name) || hasIdent(known, name) || hasIdent(local, name)) return;
+      seen.add(name.toLowerCase());
       const closest = nearestName(name, [...known]);
       issues.push({
         id: 'HALLUCINATED_TABLE',
@@ -652,7 +697,7 @@ function detectHallucinatedColumn(ast: any, schema?: SchemaDefinition): Validati
   if (!schema) return [];
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  for (const t of schema.tables) tableByName.set(t.name, t);
+  for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
 
   for (const stmt of asStatements(ast)) {
     if (!stmt) continue;
@@ -664,8 +709,8 @@ function detectHallucinatedColumn(ast: any, schema?: SchemaDefinition): Validati
     if (Array.isArray(stmt.from)) {
       for (const f of stmt.from) {
         if (f && typeof f.table === 'string') {
-          aliasMap.set(f.table, f.table);
-          if (typeof f.as === 'string' && f.as) aliasMap.set(f.as, f.table);
+          aliasMap.set(f.table.toLowerCase(), f.table);
+          if (typeof f.as === 'string' && f.as) aliasMap.set(f.as.toLowerCase(), f.table);
         }
       }
     }
@@ -683,7 +728,7 @@ function detectHallucinatedColumn(ast: any, schema?: SchemaDefinition): Validati
       !fromHasSubquery;
     const fromSchemaTables: SchemaDefinition['tables'] = canResolveBare
       ? (stmt.from
-          .map((f: any) => (typeof f?.table === 'string' ? tableByName.get(f.table) : undefined))
+          .map((f: any) => (typeof f?.table === 'string' ? tableByName.get(f.table.toLowerCase()) : undefined))
           .filter(Boolean) as SchemaDefinition['tables'])
       : [];
 
@@ -704,8 +749,8 @@ function detectHallucinatedColumn(ast: any, schema?: SchemaDefinition): Validati
       if (!tableQual) {
         // D36: bare unqualified column resolution (single- AND multi-table).
         if (fromSchemaTables.length === 0) return; // can't resolve (CTE / subquery FROM / unknown tables)
-        if (selectAliases.has(colName)) return;
-        const owners = fromSchemaTables.filter((t) => t.columns.some((c) => c.name === colName));
+        if (hasIdent(identSet(selectAliases), colName)) return;
+        const owners = fromSchemaTables.filter((t) => hasColumn(t, colName));
         // On ≥1 table → resolvable; if on 2+ that's AMBIGUOUS_COLUMN's job (D34),
         // not a hallucination. Only flag when it exists on NONE of the tables.
         if (owners.length >= 1) return;
@@ -755,12 +800,12 @@ function detectHallucinatedColumn(ast: any, schema?: SchemaDefinition): Validati
 
       // Skip locally-defined names (CTE / subquery alias) — out of D9's scope.
       if (local.has(tableQual)) return;
-      const realTable = aliasMap.get(tableQual) ?? tableQual;
+      const realTable = aliasMap.get(tableQual?.toLowerCase()) ?? tableQual;
       if (local.has(realTable)) return;
-      const schemaTable = tableByName.get(realTable);
+      const schemaTable = tableByName.get(realTable?.toLowerCase());
       // If the table itself is unknown, that's D8's job, not D9's.
       if (!schemaTable) return;
-      const exists = schemaTable.columns.some((c) => c.name === colName);
+      const exists = hasColumn(schemaTable, colName);
       if (exists) return;
       const key = `${realTable}.${colName}`;
       if (seen.has(key)) return;
@@ -938,7 +983,7 @@ function detectNullEqualityComparison(ast: any): ValidationIssue[] {
 function detectNotInNullable(ast: any, schema?: SchemaDefinition): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  if (schema) for (const t of schema.tables) tableByName.set(t.name, t);
+  if (schema) for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
   const seen = new Set<string>();
 
   for (const stmt of asStatements(ast)) {
@@ -972,9 +1017,9 @@ function detectNotInNullable(ast: any, schema?: SchemaDefinition): ValidationIss
         if (fromList.length !== 1) return;
         const srcTable = fromList[0]?.table;
         if (!colName || typeof srcTable !== 'string') return;
-        const t = tableByName.get(srcTable);
+        const t = tableByName.get(srcTable?.toLowerCase());
         if (!t) return;
-        const c = t.columns.find((cc) => cc.name === colName);
+        const c = findColumn(t, colName);
         if (!c?.nullable) return;
         const key = `sub::${lhsCol}::${srcTable}.${colName}`;
         if (seen.has(key)) return;
@@ -1031,7 +1076,7 @@ function detectAvgOverNullable(ast: any, schema?: SchemaDefinition): ValidationI
   if (!schema) return [];
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  for (const t of schema.tables) tableByName.set(t.name, t);
+  for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
   const seen = new Set<string>();
 
   for (const stmt of asStatements(ast)) {
@@ -1041,8 +1086,8 @@ function detectAvgOverNullable(ast: any, schema?: SchemaDefinition): ValidationI
     if (Array.isArray(stmt.from)) {
       for (const f of stmt.from) {
         if (f && typeof f.table === 'string') {
-          aliasMap.set(f.table, f.table);
-          if (typeof f.as === 'string' && f.as) aliasMap.set(f.as, f.table);
+          aliasMap.set(f.table.toLowerCase(), f.table);
+          if (typeof f.as === 'string' && f.as) aliasMap.set(f.as.toLowerCase(), f.table);
         }
       }
     }
@@ -1061,10 +1106,10 @@ function detectAvgOverNullable(ast: any, schema?: SchemaDefinition): ValidationI
       if (!arg || arg.type !== 'column_ref') continue;
       const colName = getColumnName(arg);
       const tableQual = getColumnTable(arg);
-      const realTable = tableQual ? aliasMap.get(tableQual) ?? tableQual : singleTable;
+      const realTable = tableQual ? aliasMap.get(tableQual?.toLowerCase()) ?? tableQual : singleTable;
       if (!colName || !realTable) continue;
-      const t = tableByName.get(realTable);
-      const c = t?.columns.find((cc) => cc.name === colName);
+      const t = tableByName.get(realTable?.toLowerCase());
+      const c = findColumn(t, colName);
       if (!c?.nullable) continue;
       const key = `${realTable}.${colName}`;
       if (seen.has(key)) continue;
@@ -1169,12 +1214,13 @@ function detectUnknownAlias(ast: any): ValidationIssue[] {
       }
     }
     if (valid.size === 0) continue; // nothing to resolve against (e.g. FROM subquery only)
+    const validLower = identSet(valid);
 
     const seen = new Set<string>();
     const visit = (node: any) => {
       const q = getColumnTable(node);
-      if (!q || valid.has(q) || seen.has(q)) return;
-      seen.add(q);
+      if (!q || hasIdent(validLower, q) || hasIdent(seen, q)) return;
+      seen.add(q.toLowerCase());
       // D35: Levenshtein-nearest defined alias (edit distance ≤ 2) as a hint.
       const col = getColumnName(node);
       const nearest = nearestAlias(q, [...valid]);
@@ -1204,13 +1250,13 @@ function detectAmbiguousColumn(ast: any, schema?: SchemaDefinition): ValidationI
   if (!schema) return [];
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  for (const t of schema.tables) tableByName.set(t.name, t);
+  for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
 
   for (const stmt of asStatements(ast)) {
     if (stmt?.type !== 'select' || !Array.isArray(stmt.from) || stmt.from.length < 2) continue;
 
     const fromTables = stmt.from
-      .map((f: any) => (typeof f?.table === 'string' ? tableByName.get(f.table) : undefined))
+      .map((f: any) => (typeof f?.table === 'string' ? tableByName.get(f.table?.toLowerCase()) : undefined))
       .filter(Boolean) as SchemaDefinition['tables'];
     if (fromTables.length < 2) continue;
 
@@ -1221,10 +1267,10 @@ function detectAmbiguousColumn(ast: any, schema?: SchemaDefinition): ValidationI
     const visit = (node: any) => {
       if (getColumnTable(node)) return; // qualified — not ambiguous
       const name = getColumnName(node);
-      if (!name || name === '*' || selectAliases.has(name)) return;
-      const owners = fromTables.filter((t) => t.columns.some((c) => c.name === name));
-      if (owners.length < 2 || seen.has(name)) return;
-      seen.add(name);
+      if (!name || name === '*' || hasIdent(selectAliases, name)) return;
+      const owners = fromTables.filter((t) => hasColumn(t, name));
+      if (owners.length < 2 || hasIdent(seen, name)) return;
+      seen.add(name.toLowerCase());
       issues.push({
         id: 'AMBIGUOUS_COLUMN',
         severity: 'warning',
@@ -1274,6 +1320,38 @@ function detectCartesianAndCrossJoin(ast: any): ValidationIssue[] {
           offendingClause: 'JOIN',
           offendingTable: tableName,
           metadata: { joinTable: tableName },
+        });
+      }
+    }
+
+    // ── Comma joins: FROM a, b with nothing relating them ────────────────────
+    // The loop above only inspects FROM entries carrying a `join` property, so
+    // the older comma syntax was invisible: `SELECT * FROM customers, payments`
+    // is a true Cartesian product and scored a clean 100. Found by the seeded
+    // benchmark (benchmark/METHODOLOGY.md), which is why it is fixed here.
+    //
+    // Deliberately conservative: a comma join WITH a column-to-column equality
+    // in WHERE is the classic pre-ANSI-92 join and is correct, so it must not
+    // fire. Only an unrelated comma join does.
+    const commaTables = stmt.from.filter((f: any) => f && !f.join && (f.table || f.as));
+    if (commaTables.length >= 2) {
+      let related = false;
+      forEachOnEquality(stmt.where, (left: any, right: any) => {
+        // Both sides are column references → the tables are related.
+        if (getColumnName(left) && getColumnName(right)) related = true;
+      });
+      if (!related) {
+        const second = commaTables[1];
+        const tableName = typeof second.table === 'string' ? second.table : second.as;
+        issues.push({
+          id: 'CARTESIAN_JOIN',
+          severity: 'error',
+          title: `Comma join with "${tableName}" has no relating condition`,
+          description: `Listing ${commaTables.length} tables in FROM separated by commas, with no WHERE condition relating them, produces a Cartesian product: every row of one table paired with every row of "${tableName}".`,
+          fix: `Relate the tables explicitly: JOIN ${tableName} ON .... If a Cartesian product is intended, write CROSS JOIN so the intent is visible.`,
+          offendingClause: 'FROM',
+          offendingTable: tableName,
+          metadata: { joinTable: tableName, commaJoin: true, tableCount: commaTables.length },
         });
       }
     }
@@ -1355,7 +1433,7 @@ function forEachOnEquality(node: any, cb: (left: any, right: any) => void): void
 function detectSuspiciousJoinKey(ast: any, schema?: SchemaDefinition): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  if (schema) for (const t of schema.tables) tableByName.set(t.name, t);
+  if (schema) for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
 
   for (const stmt of asStatements(ast)) {
     if (stmt?.type !== 'select' || !Array.isArray(stmt.from)) continue;
@@ -1372,8 +1450,8 @@ function detectSuspiciousJoinKey(ast: any, schema?: SchemaDefinition): Validatio
         const rq = getColumnTable(right);
         if (!lcol || lcol !== rcol || lq === rq) return;
         if (lcol !== 'id') return; // only the high-confidence `id = id` shape
-        const ltab = lq ? aliasMap.get(lq) ?? lq : '?';
-        const rtab = rq ? aliasMap.get(rq) ?? rq : '?';
+        const ltab = lq ? aliasMap.get(lq?.toLowerCase()) ?? lq : '?';
+        const rtab = rq ? aliasMap.get(rq?.toLowerCase()) ?? rq : '?';
         const key = `${ltab}.${rtab}`;
         if (seen.has(key)) return;
         seen.add(key);
@@ -1381,9 +1459,9 @@ function detectSuspiciousJoinKey(ast: any, schema?: SchemaDefinition): Validatio
         // If schema knows a `<parent>_id` FK on either table, name it in the fix.
         let suggestion = '';
         const childFk = (childTab: string, parentTab: string) => {
-          const t = tableByName.get(childTab);
+          const t = tableByName.get(childTab?.toLowerCase());
           const guess = `${parentTab.replace(/s$/, '')}_id`;
-          return t?.columns.some((c) => c.name === guess) ? guess : null;
+          return hasColumn(t, guess) ? guess : null;
         };
         const fk = (rq && childFk(rtab, ltab)) || (lq && childFk(ltab, rtab)) || null;
         if (fk) suggestion = ` The expected key is likely "${fk}".`;
@@ -1409,7 +1487,42 @@ function detectSuspiciousJoinKey(ast: any, schema?: SchemaDefinition): Validatio
 // Two+ child tables joined to the SAME parent key cross-multiply. With a measure
 // aggregate (SUM/AVG/MIN/MAX) it inflates the measure (F1); otherwise it's a
 // multi-1:M count pattern (F2).
-function detectFanOutJoins(ast: any): ValidationIssue[] {
+// A join whose ON clause equates the JOINED table's primary key (or a unique
+// column) can match at most one row per left row, so it cannot multiply rows.
+// Without this check the fan-out detectors reason from schema relationships
+// alone and flag joins that are arithmetically incapable of fanning out.
+// Found by the BIRD benchmark: `card JOIN disp ON card.disp_id = disp.disp_id`
+// where disp_id is disp's PK was reported as a fan-out.
+function joinTargetsUniqueKey(
+  join: any,
+  schema: SchemaDefinition | undefined,
+): boolean {
+  if (!schema || !join?.on) return false;
+  const tableName = typeof join.table === 'string' ? join.table : undefined;
+  if (!tableName) return false;
+  const schemaTable = findTable(schema, tableName);
+  if (!schemaTable) return false;
+
+  // Qualifiers that refer to THIS join's table (its own name or its alias).
+  const selfQualifiers = identSet(
+    [tableName, typeof join.as === 'string' ? join.as : ''].filter(Boolean) as string[],
+  );
+
+  let unique = false;
+  forEachOnEquality(join.on, (left: any, right: any) => {
+    for (const node of [left, right]) {
+      if (node?.type !== 'column_ref') continue;
+      const q = getColumnTable(node);
+      const c = getColumnName(node);
+      if (!c || !q || !hasIdent(selfQualifiers, q)) continue;
+      const col = findColumn(schemaTable, c);
+      if (col?.isPK) unique = true;
+    }
+  });
+  return unique;
+}
+
+function detectFanOutJoins(ast: any, schema?: SchemaDefinition): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   for (const stmt of asStatements(ast)) {
     if (stmt?.type !== 'select' || !Array.isArray(stmt.from)) continue;
@@ -1417,7 +1530,13 @@ function detectFanOutJoins(ast: any): ValidationIssue[] {
     // they don't fan out — exclude them to avoid flagging safe pre-aggregations.
     const local = collectLocalTableNames(stmt);
     const joins = stmt.from.filter(
-      (f: any) => f?.join && f.on && typeof f.table === 'string' && !local.has(f.table),
+      (f: any) =>
+        f?.join &&
+        f.on &&
+        typeof f.table === 'string' &&
+        !hasIdent(identSet(local), f.table) &&
+        // A join onto the target's primary key is at most 1:1 and cannot fan out.
+        !joinTargetsUniqueKey(f, schema),
     );
     if (joins.length < 2) continue;
     const aliasMap = buildAliasMap(stmt);
@@ -1453,7 +1572,7 @@ function detectFanOutJoins(ast: any): ValidationIssue[] {
       const q = getColumnTable(arg);
       const c = getColumnName(arg);
       if (!c) continue;
-      measure = { func: fn.toUpperCase(), column: c, table: q ? aliasMap.get(q) ?? q : '?' };
+      measure = { func: fn.toUpperCase(), column: c, table: q ? aliasMap.get(q?.toLowerCase()) ?? q : '?' };
       break;
     }
 
@@ -1561,7 +1680,7 @@ function isIntegerType(type: string | undefined): boolean {
 function detectIntegerDivision(ast: any, schema?: SchemaDefinition): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  if (schema) for (const t of schema.tables) tableByName.set(t.name, t);
+  if (schema) for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
 
   for (const stmt of asStatements(ast)) {
     if (stmt?.type !== 'select') continue;
@@ -1577,10 +1696,10 @@ function detectIntegerDivision(ast: any, schema?: SchemaDefinition): ValidationI
       if (!schema || node?.type !== 'column_ref') return null;
       const colName = getColumnName(node);
       const q = getColumnTable(node);
-      const realTable = q ? aliasMap.get(q) ?? q : singleTable;
+      const realTable = q ? aliasMap.get(q?.toLowerCase()) ?? q : singleTable;
       if (!colName || !realTable) return null;
-      const t = tableByName.get(realTable);
-      return t?.columns.find((c) => c.name === colName)?.type ?? null;
+      const t = tableByName.get(realTable?.toLowerCase());
+      return findColumn(t, colName)?.type ?? null;
     };
 
     const isIntegerProducing = (n: any): boolean => {
@@ -1656,7 +1775,7 @@ function detectMissingTimeFilter(ast: any, schema?: SchemaDefinition): Validatio
   if (!schema) return [];
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  for (const t of schema.tables) tableByName.set(t.name, t);
+  for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
 
   for (const stmt of asStatements(ast)) {
     if (stmt?.type !== 'select' || !stmt.where || !Array.isArray(stmt.from)) continue;
@@ -1669,7 +1788,7 @@ function detectMissingTimeFilter(ast: any, schema?: SchemaDefinition): Validatio
     if (!hasSum) continue;
 
     const dateTable = stmt.from
-      .map((f: any) => (typeof f?.table === 'string' ? tableByName.get(f.table) : undefined))
+      .map((f: any) => (typeof f?.table === 'string' ? tableByName.get(f.table?.toLowerCase()) : undefined))
       .find((t: any) => t && t.columns.some((c: any) => isDateColumn(c)));
     if (!dateTable) continue;
 
@@ -1796,7 +1915,7 @@ function detectCountStarVsCountCol(ast: any, schema?: SchemaDefinition): Validat
   if (!schema) return [];
   const issues: ValidationIssue[] = [];
   const tableByName = new Map<string, SchemaDefinition['tables'][number]>();
-  for (const t of schema.tables) tableByName.set(t.name, t);
+  for (const t of schema.tables) tableByName.set(t.name.toLowerCase(), t);
 
   for (const stmt of asStatements(ast)) {
     if (stmt?.type !== 'select') continue;
@@ -1815,10 +1934,10 @@ function detectCountStarVsCountCol(ast: any, schema?: SchemaDefinition): Validat
       if (!arg || arg.type !== 'column_ref') continue; // COUNT(*) is fine
       const colName = getColumnName(arg);
       const q = getColumnTable(arg);
-      const realTable = q ? aliasMap.get(q) ?? q : singleTable;
+      const realTable = q ? aliasMap.get(q?.toLowerCase()) ?? q : singleTable;
       if (!colName || !realTable) continue;
-      const t = tableByName.get(realTable);
-      const c = t?.columns.find((cc) => cc.name === colName);
+      const t = tableByName.get(realTable?.toLowerCase());
+      const c = findColumn(t, colName);
       if (!c) continue; // unknown column is D9's job
       if (!c.nullable) continue; // NOT NULL → COUNT(col) === COUNT(*), no risk
       const key = `${realTable}.${colName}`;

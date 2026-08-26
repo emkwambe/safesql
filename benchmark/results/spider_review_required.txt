@@ -1,0 +1,3225 @@
+SafeSQL Pro benchmark - human review queue - dataset: spider
+Generated 2026-08-26 16:28 UTC
+
+Every entry below fired a detector that the ground truth did not expect.
+Classify each against METHODOLOGY.md sec.3 (the five ambiguous cases) and
+sec.4.1 (fan-out family co-firing). A firing on a CLEAN control is a
+candidate false positive. A co-firing on a DEFECT is usually a correct
+second finding, but must be confirmed, not assumed.
+
+Final FP count pending manual review.
+========================================================================
+
+[spider/0004_concert_singer]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0005_concert_singer]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0016_concert_singer]  kind=clean
+  expected : (none)
+  fired    : INCOMPLETE_GROUP_BY
+  UNEXPECTED: INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0017_concert_singer]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0022_concert_singer]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0023_concert_singer]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0025_concert_singer]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0028_concert_singer]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0029_concert_singer]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0033_concert_singer]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0034_concert_singer]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0035_concert_singer]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0036_concert_singer]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0037_concert_singer]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0038_concert_singer]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0043_concert_singer]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0044_concert_singer]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0051_pets_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0052_pets_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0053_pets_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0054_pets_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0057_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0058_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0059_pets_1]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0060_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0065_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0066_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0071_pets_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0072_pets_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0073_pets_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0074_pets_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0075_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0076_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0077_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0078_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0079_pets_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0080_pets_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0083_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0084_pets_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0085_pets_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, NOT_IN_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE, NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0086_pets_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, NOT_IN_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE, NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0089_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0090_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0093_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0094_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0095_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0096_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0097_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0098_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0099_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0100_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0101_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0102_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0103_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0104_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0105_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0106_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0109_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY, INNER_JOIN_NULL_EXCLUSION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0110_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0111_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0112_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0113_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0114_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0115_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0116_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0117_car_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0118_car_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0125_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0126_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0127_car_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0128_car_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0131_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0132_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0133_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0134_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0135_car_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0136_car_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0137_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0138_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0143_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0144_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0147_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0148_car_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0151_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0152_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0157_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0158_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0159_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0160_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0161_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0162_car_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0163_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0164_car_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0165_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0166_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0167_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0168_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0171_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0172_car_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 72
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0175_car_1]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0178_car_1]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0179_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0180_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0181_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0182_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0183_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0184_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0185_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0186_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0193_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0194_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0195_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0196_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0197_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0198_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0199_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0200_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0201_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0202_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0203_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0204_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0205_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0206_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0207_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0208_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0209_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0210_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0211_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0212_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0213_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0214_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0215_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0216_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0217_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0218_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0219_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0220_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0233_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0234_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0235_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0236_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0237_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0238_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0239_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0240_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0245_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0246_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0247_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0248_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0249_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0250_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0251_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0252_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0253_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0254_flight_2]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0255_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0256_flight_2]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0257_flight_2]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0258_flight_2]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0279_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0280_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0283_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0284_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0285_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0286_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0287_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0288_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0291_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : SELECT_STAR_EXPENSIVE
+  UNEXPECTED: SELECT_STAR_EXPENSIVE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0292_employee_hire_evaluation]  kind=clean
+  expected : (none)
+  fired    : SELECT_STAR_EXPENSIVE
+  UNEXPECTED: SELECT_STAR_EXPENSIVE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0303_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0304_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0307_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0308_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0323_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0324_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0325_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0326_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0335_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : INCOMPLETE_GROUP_BY
+  UNEXPECTED: INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0336_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : INCOMPLETE_GROUP_BY
+  UNEXPECTED: INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0337_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0338_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0339_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0340_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0341_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0342_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0349_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0350_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0351_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0352_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0353_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0354_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0355_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0356_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0359_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0360_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0363_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0364_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0365_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0366_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0369_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0370_cre_Doc_Template_Mgt]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0387_course_teach]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0388_course_teach]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0403_course_teach]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0404_course_teach]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0405_course_teach]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0406_course_teach]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0409_course_teach]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0410_course_teach]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0413_museum_visit]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0416_museum_visit]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0419_museum_visit]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0420_museum_visit]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0423_museum_visit]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0424_museum_visit]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0425_museum_visit]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, INNER_JOIN_NULL_EXCLUSION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0426_museum_visit]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0435_wta_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 90
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0436_wta_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 90
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0437_wta_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0438_wta_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0451_wta_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0452_wta_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0459_wta_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0460_wta_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0485_wta_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0486_wta_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0487_wta_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0488_wta_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0495_battle_death]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0496_battle_death]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0498_battle_death]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0503_battle_death]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER, NOT_IN_NULLABLE
+  UNEXPECTED: MISSING_TIME_FILTER, NOT_IN_NULLABLE
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0504_battle_death]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0516_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0521_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0522_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0535_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0536_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 76
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0541_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0542_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0543_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0544_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0545_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0546_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0563_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0564_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0575_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0576_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0583_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0584_student_transcripts_tracking]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0587_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0588_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0589_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0590_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0593_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0594_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0599_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0600_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0601_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0602_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0603_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0604_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0609_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0610_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0611_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0612_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0619_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0620_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0621_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0622_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0623_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0624_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0625_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0626_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0631_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0632_tvshow]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0633_tvshow]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0634_tvshow]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0637_tvshow]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0638_tvshow]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0645_tvshow]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0646_tvshow]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0653_poker_player]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0654_poker_player]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0659_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0660_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0661_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0662_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0663_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0664_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0665_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0666_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0667_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0668_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0669_poker_player]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0670_poker_player]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, AVG_OVER_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0671_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0672_poker_player]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0681_poker_player]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0682_poker_player]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0683_poker_player]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0684_poker_player]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0696_voter_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0697_voter_1]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0699_voter_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0700_voter_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0704_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0705_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0706_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0707_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0708_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0709_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0710_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0711_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0712_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0713_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0714_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0715_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0716_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0717_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0718_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0719_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0720_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0721_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0722_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0723_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0724_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0725_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0726_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0727_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0728_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0729_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0730_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0731_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0734_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0735_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0736_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0737_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0738_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0739_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0746_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0747_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0748_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0749_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0750_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0751_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0752_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0753_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0754_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0755_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION, SELECT_STAR_EXPENSIVE
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION, SELECT_STAR_EXPENSIVE
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0756_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0757_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0758_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0759_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0760_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0761_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0762_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0763_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0764_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0765_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0766_world_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0767_world_1]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0768_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0769_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0770_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0771_world_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0774_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0775_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0776_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0777_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0780_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0781_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0782_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0783_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0784_world_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0785_world_1]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0786_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, INNER_JOIN_NULL_EXCLUSION, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0787_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  UNEXPECTED: HALLUCINATED_COLUMN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0798_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0799_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0806_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0807_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0808_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0809_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0810_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0811_world_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: AVG_OVER_NULLABLE, HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0816_world_1]  kind=clean
+  expected : (none)
+  fired    : INCOMPLETE_GROUP_BY
+  UNEXPECTED: INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0817_world_1]  kind=clean
+  expected : (none)
+  fired    : INCOMPLETE_GROUP_BY
+  UNEXPECTED: INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0818_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0819_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0820_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0821_world_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0832_orchestra]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0833_orchestra]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0840_orchestra]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0841_orchestra]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0846_orchestra]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0847_orchestra]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0854_orchestra]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0855_orchestra]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0858_orchestra]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0859_orchestra]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  UNEXPECTED: HALLUCINATED_COLUMN, MISSING_TIME_FILTER
+  score    : 10
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0868_network_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0869_network_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0872_network_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0873_network_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0884_network_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0885_network_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0890_network_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0891_network_1]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0892_network_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0893_network_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0904_network_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0905_network_1]  kind=clean
+  expected : (none)
+  fired    : COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  UNEXPECTED: COUNT_PARENT_AFTER_CHILD_JOIN, INCOMPLETE_GROUP_BY
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0912_network_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0913_network_1]  kind=clean
+  expected : (none)
+  fired    : AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  UNEXPECTED: AGGREGATION_GRAIN_MISMATCH, COUNT_PARENT_AFTER_CHILD_JOIN, HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0914_network_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0915_network_1]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0920_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0921_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0924_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0925_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0944_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : CARTESIAN_JOIN, JOIN_MULTIPLICATION
+  UNEXPECTED: CARTESIAN_JOIN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0945_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : CARTESIAN_JOIN, JOIN_MULTIPLICATION
+  UNEXPECTED: CARTESIAN_JOIN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0950_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0951_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0952_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0953_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0954_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0955_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0956_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0957_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0958_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0959_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0960_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0961_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0974_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0975_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER
+  UNEXPECTED: MISSING_TIME_FILTER
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0978_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER, NOT_IN_NULLABLE
+  UNEXPECTED: MISSING_TIME_FILTER, NOT_IN_NULLABLE
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0979_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : MISSING_TIME_FILTER, NOT_IN_NULLABLE
+  UNEXPECTED: MISSING_TIME_FILTER, NOT_IN_NULLABLE
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0980_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0981_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0982_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0983_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0986_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0987_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : AVG_OVER_NULLABLE
+  UNEXPECTED: AVG_OVER_NULLABLE
+  score    : 95
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0998_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/0999_dog_kennels]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1006_singer]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1007_singer]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1018_singer]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1019_singer]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1020_singer]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1021_singer]  kind=clean
+  expected : (none)
+  fired    : JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1026_singer]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1027_singer]  kind=clean
+  expected : (none)
+  fired    : NOT_IN_NULLABLE
+  UNEXPECTED: NOT_IN_NULLABLE
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1031_real_estate_properties]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[spider/1033_real_estate_properties]  kind=clean
+  expected : (none)
+  fired    : HALLUCINATED_COLUMN
+  UNEXPECTED: HALLUCINATED_COLUMN
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+

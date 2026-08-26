@@ -1,0 +1,47 @@
+SafeSQL Pro benchmark - human review queue - dataset: adversarial
+Generated 2026-08-26 16:28 UTC
+
+Every entry below fired a detector that the ground truth did not expect.
+Classify each against METHODOLOGY.md sec.3 (the five ambiguous cases) and
+sec.4.1 (fan-out family co-firing). A firing on a CLEAN control is a
+candidate false positive. A co-firing on a DEFECT is usually a correct
+second finding, but must be confirmed, not assumed.
+
+Final FP count pending manual review.
+========================================================================
+
+[clean/A01_date_spine_cross_join]  kind=clean
+  expected : (none)
+  fired    : CARTESIAN_JOIN, JOIN_MULTIPLICATION
+  UNEXPECTED: CARTESIAN_JOIN, JOIN_MULTIPLICATION
+  score    : 25
+  verdict  : ____ (TP / FP + rationale)
+
+[clean/A03_inner_join_nulls_intentional]  kind=clean
+  expected : (none)
+  fired    : INNER_JOIN_NULL_EXCLUSION
+  UNEXPECTED: INNER_JOIN_NULL_EXCLUSION
+  score    : 80
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/A12_left_join_filter_looks_intentional]  kind=defect
+  expected : LEFT_JOIN_FILTERED_IN_WHERE
+  fired    : JOIN_MULTIPLICATION, LEFT_JOIN_FILTERED_IN_WHERE
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/A17_coalesce_join_key_looks_like_null_handling]  kind=defect
+  expected : COALESCE_IN_JOIN_KEY
+  fired    : COALESCE_IN_JOIN_KEY, JOIN_MULTIPLICATION
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+
+[defect/A19_suspicious_key_disguised_by_alias]  kind=defect
+  expected : SUSPICIOUS_JOIN_KEY
+  fired    : JOIN_MULTIPLICATION, SUSPICIOUS_JOIN_KEY
+  UNEXPECTED: JOIN_MULTIPLICATION
+  score    : 60
+  verdict  : ____ (TP / FP + rationale)
+

@@ -1,0 +1,149 @@
+{
+  "suite": "adversarial",
+  "schema": "schema.sql",
+  "dialect": "postgresql",
+  "detector_count": 33,
+  "methodology": "../METHODOLOGY.md",
+  "cases": [
+    {
+      "detector": "A01_date_spine_cross_join",
+      "note": "METHODOLOGY 3.1 - a date spine is the correct construction for a dense calendar, not a defect. Firing here is an FP.",
+      "clean": "clean/A01_date_spine_cross_join.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A02_select_star_in_cte",
+      "note": "METHODOLOGY 3.2 - SELECT * inside a CTE is acceptable; only a final projection SELECT * is a finding. The final projection here is explicit.",
+      "clean": "clean/A02_select_star_in_cte.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A03_inner_join_nulls_intentional",
+      "note": "METHODOLOGY 3.3 - the author intends to drop payments with no customer. Firing is an FP.",
+      "clean": "clean/A03_inner_join_nulls_intentional.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A04_unfiltered_small_reference_table",
+      "note": "METHODOLOGY 3.4 - countries is a <500-row reference table; an unfiltered scan is correct.",
+      "clean": "clean/A04_unfiltered_small_reference_table.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A05_fanout_preaggregated_in_cte",
+      "note": "METHODOLOGY 3.5 - the reference-correct fix for a fan-out. The detector is right to stay silent; firing is an FP.",
+      "clean": "clean/A05_fanout_preaggregated_in_cte.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A06_comma_join_properly_related",
+      "note": "Pre-ANSI-92 join syntax, correctly related in WHERE. Regression guard for the comma-join detection added after Phase 1.",
+      "clean": "clean/A06_comma_join_properly_related.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A07_not_in_over_non_nullable",
+      "note": "NOT IN is only dangerous over a nullable column. countries.code is a NOT NULL primary key, so this is safe.",
+      "clean": "clean/A07_not_in_over_non_nullable.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A08_deterministic_window",
+      "note": "ORDER BY carries a unique tie-breaker, so row numbering is stable.",
+      "clean": "clean/A08_deterministic_window.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A09_guarded_integer_division",
+      "note": "Numerator cast to numeric and denominator NULLIF-guarded: neither truncation nor divide-by-zero applies.",
+      "clean": "clean/A09_guarded_integer_division.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A10_count_star_no_join",
+      "note": "COUNT(*) is only misleading after a child join. There is no join here.",
+      "clean": "clean/A10_count_star_no_join.sql",
+      "clean_expect_fires": []
+    },
+    {
+      "detector": "A11_fanout_hidden_in_cte",
+      "note": "The CTE looks like pre-aggregation but does not aggregate - it joins. The SUM outside is still inflated.",
+      "defect": "defects/A11_fanout_hidden_in_cte.sql",
+      "defect_expect_fires": [
+        "AGGREGATE_OVER_FANOUT_JOIN"
+      ]
+    },
+    {
+      "detector": "A12_left_join_filter_looks_intentional",
+      "note": "The comment claims the LEFT JOIN is preserved, but the WHERE predicate on the right side silently converts it to an INNER JOIN.",
+      "defect": "defects/A12_left_join_filter_looks_intentional.sql",
+      "defect_expect_fires": [
+        "LEFT_JOIN_FILTERED_IN_WHERE"
+      ]
+    },
+    {
+      "detector": "A13_null_equality_in_or_branch",
+      "note": "The = NULL is buried in an OR branch and looks like a null check.",
+      "defect": "defects/A13_null_equality_in_or_branch.sql",
+      "defect_expect_fires": [
+        "NULL_EQUALITY_COMPARISON"
+      ]
+    },
+    {
+      "detector": "A14_not_in_nullable_looks_guarded",
+      "note": "The WHERE inside the subquery looks protective but does not exclude NULL customer_id, so NOT IN can still collapse to zero rows.",
+      "defect": "defects/A14_not_in_nullable_looks_guarded.sql",
+      "defect_expect_fires": [
+        "NOT_IN_NULLABLE"
+      ]
+    },
+    {
+      "detector": "A15_integer_division_inside_avg",
+      "note": "Wrapping an integer division in AVG does not stop the truncation - each row truncates to 0 or 1 before averaging.",
+      "defect": "defects/A15_integer_division_inside_avg.sql",
+      "defect_expect_fires": [
+        "INTEGER_DIVISION_RISK"
+      ]
+    },
+    {
+      "detector": "A16_select_star_final_of_cte_chain",
+      "note": "Two CTEs make it look disciplined, but the final projection is SELECT * over the whole chain.",
+      "defect": "defects/A16_select_star_final_of_cte_chain.sql",
+      "defect_expect_fires": [
+        "SELECT_STAR_EXPENSIVE"
+      ]
+    },
+    {
+      "detector": "A17_coalesce_join_key_looks_like_null_handling",
+      "note": "COALESCE in the ON clause reads as defensive null handling but silently inflates matches and defeats the index.",
+      "defect": "defects/A17_coalesce_join_key_looks_like_null_handling.sql",
+      "defect_expect_fires": [
+        "COALESCE_IN_JOIN_KEY"
+      ]
+    },
+    {
+      "detector": "A18_window_order_non_unique",
+      "note": "ORDER BY created_at looks deterministic but DATE has day granularity, so same-day customers tie and order arbitrarily.",
+      "defect": "defects/A18_window_order_non_unique.sql",
+      "defect_expect_fires": [
+        "NON_DETERMINISTIC_WINDOW_ORDER"
+      ]
+    },
+    {
+      "detector": "A19_suspicious_key_disguised_by_alias",
+      "note": "Aliasing to cust/sub makes cust.id = sub.id read like a real relationship. It joins two unrelated surrogate keys.",
+      "defect": "defects/A19_suspicious_key_disguised_by_alias.sql",
+      "defect_expect_fires": [
+        "SUSPICIOUS_JOIN_KEY"
+      ]
+    },
+    {
+      "detector": "A20_hallucinated_column_plausible_name",
+      "note": "churn_risk_score is exactly the sort of column an LLM invents: plausible, domain-appropriate, and not in the schema.",
+      "defect": "defects/A20_hallucinated_column_plausible_name.sql",
+      "defect_expect_fires": [
+        "HALLUCINATED_COLUMN"
+      ]
+    }
+  ]
+}

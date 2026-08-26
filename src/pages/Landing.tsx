@@ -76,6 +76,7 @@ export function LandingPage() {
           <span style={{ fontSize: 11, color: '#52525b' }}>v0.9.1</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+          <a href="#/benchmark" style={navLink}>Benchmark</a>
           <a href="#/pricing" style={navLink}>Pricing</a>
           <AuthControls />
           <a href="#/editor" style={ctaButton}>Open Editor →</a>
@@ -189,9 +190,16 @@ export function LandingPage() {
         <h2 style={h2}>How it works</h2>
         <div style={cardGrid}>
           <StepCard num={1} title="Paste SQL + schema (or connect your database)" body="Paste your query and DDL — or connect directly to your PostgreSQL database. SafeSQL Pro parses both into an AST instantly." />
-          <StepCard num={2} title="Detect logic errors, not just syntax" body="33 semantic detectors catch what linters miss: JOIN multiplication, fan-out aggregates, hallucinated AI columns, LEFT JOIN WHERE traps, missing time filters, and more. Zero false positives — rules fire deterministically, never guess." />
+          <StepCard num={2} title="Detect logic errors, not just syntax" body="33 semantic detectors catch what linters miss: JOIN multiplication, fan-out aggregates, hallucinated AI columns, LEFT JOIN WHERE traps, missing time filters, and more. Deterministic AST detection — rules fire or they don't, never a guess. See our public benchmark." />
           <StepCard num={3} title="Prove it with synthetic data" body="Not just warnings — proof. SafeSQL Pro runs your query on RealityDB synthetic data and shows actual row counts, inflated aggregates, and rejected columns before a single production row is touched." />
         </div>
+        <p style={{ textAlign: 'center', marginTop: 18, fontSize: 13.5, color: '#a1a1aa' }}>
+          Every claim above is measured, not asserted —{' '}
+          <a href="#/benchmark" style={{ color: '#a78bfa', fontWeight: 600 }}>
+            see the public benchmark
+          </a>{' '}
+          (2,654 queries, methodology and raw results in the repo).
+        </p>
       </section>
 
       {/* PRICING */}
@@ -293,7 +301,7 @@ export function PricingSection() {
           tier="Free"
           price="$0"
           period="forever"
-          features={['50 validations/month', 'All 33+ detectors', 'Monaco editor sandbox']}
+          features={['12 core detectors', '50 validations/month', 'Monaco editor sandbox']}
           cta="Start free"
           href="#/editor"
         />
