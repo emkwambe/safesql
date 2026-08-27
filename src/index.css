@@ -48,3 +48,39 @@ input,
 select {
   font-family: inherit;
 }
+
+/* /how-to tab strip. The app is otherwise inline-styled, but a real breakpoint
+   cannot be expressed inline — this follows the .safesql-pulse precedent: a
+   class here, consumed via className. Layout only; colour and type stay inline
+   with the rest of the component. */
+.safesql-howto-tabs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-bottom: 1px solid #27272a;
+}
+
+@media (max-width: 639px) {
+  .safesql-howto-tabs {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow-x: visible;
+    gap: 0;
+    border-bottom: none;
+  }
+  /* Stacked: the active tab is marked on the left edge, not the bottom. */
+  .safesql-howto-tabs > button {
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #1f1f23 !important;
+    border-left: 2px solid transparent;
+    margin-bottom: 0 !important;
+  }
+  .safesql-howto-tabs > button[aria-selected='true'] {
+    border-left-color: #7c3aed;
+    background: #141417;
+  }
+}

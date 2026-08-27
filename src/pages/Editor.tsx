@@ -419,6 +419,7 @@ export function EditorPage() {
             <TeamMenu plan={appUser.plan} />
           )}
           <a href="#/settings" style={navLink}>Settings</a>
+          <a href="#/how-to" style={navLink}>How To</a>
           <a href="#/benchmark" style={navLink}>Benchmark</a>
           <a href="#/blog" style={navLink}>Blog</a>
           <a href="#/pricing" style={navLink}>Pricing</a>

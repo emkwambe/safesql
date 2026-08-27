@@ -7,7 +7,7 @@ import { ValidationReport } from '../components/ValidationReport';
 import { parseDDL } from '../services/schemaParser';
 import { validateSQL } from '../services/sqlValidator';
 import { startCheckoutForPlan, type Plan } from '../services/stripe';
-import { AuthControls } from '../components/AuthControls';
+import { SiteNav } from '../components/SiteNav';
 import { useAppUser } from '../hooks/useAppUser';
 import { ROICalculator, type RecommendedTier } from '../components/ROICalculator';
 
@@ -68,20 +68,7 @@ export function LandingPage() {
   return (
     <div style={{ background: '#09090b', color: '#e4e4e7', minHeight: '100vh' }}>
       {/* NAV */}
-      <nav style={navStyle}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <a href="#/" style={{ fontWeight: 700, fontSize: 18, color: '#a78bfa', textDecoration: 'none' }}>
-            SafeSQL Pro
-          </a>
-          <span style={{ fontSize: 11, color: '#52525b' }}>v0.9.1</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-          <a href="#/benchmark" style={navLink}>Benchmark</a>
-          <a href="#/pricing" style={navLink}>Pricing</a>
-          <AuthControls />
-          <a href="#/editor" style={ctaButton}>Open Editor →</a>
-        </div>
-      </nav>
+      <SiteNav current="landing" />
 
       {/* HERO — five layers: hook, category+trust, action promise,
           belonging+judgment, CTA. Sized so all five clear the fold on a
@@ -167,8 +154,8 @@ export function LandingPage() {
             <a href="#/editor" style={{ ...ctaButton, padding: '12px 22px', fontSize: 14 }}>
               Validate your SQL free →
             </a>
-            <a href="#demo" style={{ ...secondaryButton, padding: '12px 22px', fontSize: 14 }}>
-              See it in action
+            <a href="#/how-to" style={{ ...secondaryButton, padding: '12px 22px', fontSize: 14 }}>
+              How it works →
             </a>
           </div>
           <div style={{ marginTop: 14, fontSize: 12, color: '#71717a' }}>
@@ -787,23 +774,7 @@ const toggleBtn: React.CSSProperties = {
 
 // ── Styles ──────────────────────────────────────────────────────────────────
 
-const navStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: '14px 32px',
-  borderBottom: '1px solid #18181b',
-  background: '#0a0a0a',
-  position: 'sticky',
-  top: 0,
-  zIndex: 10,
-};
 
-const navLink: React.CSSProperties = {
-  color: '#a1a1aa',
-  textDecoration: 'none',
-  fontSize: 13,
-};
 
 const ctaButton: React.CSSProperties = {
   background: '#7c3aed',
