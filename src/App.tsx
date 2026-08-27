@@ -14,10 +14,11 @@ import { AuditLogPage } from './pages/AuditLog';
 import { CustomRulesPage } from './pages/CustomRules';
 import { BenchmarkPage } from './pages/Benchmark';
 import { HowToPage } from './pages/HowTo';
+import { AcceptInvitePage } from './pages/AcceptInvite';
+import { TeamPage } from './pages/Team';
 import { BlogPage } from './pages/Blog';
 import { TeamSetupPage } from './pages/TeamSetup';
 import { TeamMembersPage } from './pages/TeamMembers';
-import { JoinTeamPage } from './pages/JoinTeam';
 import { QueryLibraryPage } from './pages/QueryLibrary';
 import { LaunchPage } from './pages/LaunchPage';
 import { PrivacyPage } from './pages/Privacy';
@@ -30,7 +31,7 @@ type Route =
   | 'landing' | 'editor' | 'pricing' | 'share' | 'analytics' | 'settings'
   | 'team-analytics' | 'team-approvals' | 'team-audit' | 'compliance' | 'team-rules' | 'blog'
   | 'team-setup' | 'team-members' | 'team-join' | 'library' | 'launch'
-  | 'privacy' | 'terms' | 'security' | 'dpa' | 'sub-processors' | 'benchmark' | 'how-to';
+  | 'privacy' | 'terms' | 'security' | 'dpa' | 'sub-processors' | 'benchmark' | 'how-to' | 'accept-invite' | 'team';
 
 function routeFromLocation(): Route {
   // New short-URL permalink is a real path: /v/{id} (served via _redirects SPA
@@ -45,6 +46,8 @@ function routeFromLocation(): Route {
   if (h.startsWith('/team/members')) return 'team-members';
   if (h.startsWith('/team/join')) return 'team-join';
   if (h.startsWith('/team/setup')) return 'team-setup';
+  // After every /team/<sub> check above, otherwise this swallows them.
+  if (h === '/team' || h.startsWith('/team?')) return 'team';
   if (h.startsWith('/library')) return 'library';
   if (h.startsWith('/launch')) return 'launch';
   if (h.startsWith('/privacy')) return 'privacy';
@@ -53,6 +56,7 @@ function routeFromLocation(): Route {
   if (h.startsWith('/sub-processors')) return 'sub-processors';
   if (h.startsWith('/dpa')) return 'dpa';
   if (h.startsWith('/compliance')) return 'compliance';
+  if (h.startsWith('/accept-invite')) return 'accept-invite';
   if (h.startsWith('/how-to')) return 'how-to';
   if (h.startsWith('/benchmark')) return 'benchmark';
   if (h.startsWith('/blog')) return 'blog';
@@ -106,7 +110,9 @@ function App() {
     case 'team-members':
       return <TeamMembersPage />;
     case 'team-join':
-      return <JoinTeamPage />;
+      // Invitations already sent point at #/team/join. Render the newer
+      // component so those links get the service-role accept path too.
+      return <AcceptInvitePage />;
     case 'library':
       return <QueryLibraryPage />;
     case 'launch':
@@ -121,6 +127,10 @@ function App() {
       return <DPAPage />;
     case 'sub-processors':
       return <SubProcessorsPage />;
+    case 'team':
+      return <TeamPage />;
+    case 'accept-invite':
+      return <AcceptInvitePage />;
     case 'how-to':
       return <HowToPage />;
     case 'benchmark':

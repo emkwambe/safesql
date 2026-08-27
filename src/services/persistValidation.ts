@@ -34,6 +34,11 @@ export async function persistValidation(input: PersistValidationInput): Promise<
       warning_count: input.report.warnings.length,
       ai_enriched: hasAIExplanation(input.report),
       dialect: input.dialect ?? 'postgresql',
+      // Sprint 6B: attribute the row to the team so team history and the
+      // dashboard can read it. Previously only writeAuditEvent below carried
+      // team_id (to audit_log), so validations.team_id was always NULL and the
+      // team view had nothing to show.
+      team_id: input.teamId ?? null,
     });
     if (error) {
       console.warn('persistValidation failed', error.message);
