@@ -84,3 +84,10 @@ select {
     background: #141417;
   }
 }
+
+/* Loading-skeleton shimmer for the team dashboard (Sprint 7). */
+@keyframes safesql-shimmer {
+  0% { background-position: 200% 0; opacity: 0.75; }
+  50% { opacity: 1; }
+  100% { background-position: -200% 0; opacity: 0.75; }
+}

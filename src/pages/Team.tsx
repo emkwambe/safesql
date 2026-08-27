@@ -1,7 +1,41 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { useAppUser } from '../hooks/useAppUser';
 import { SiteNav } from '../components/SiteNav';
+import {
+  TeamHealthScore,
+  TeamHealthScoreSkeleton,
+  type HealthSummary,
+} from '../components/team/TeamHealthScore';
+import {
+  IssueBreakdown,
+  IssueBreakdownSkeleton,
+  type IssueRow,
+} from '../components/team/IssueBreakdown';
+import { HealthTrendChartSkeleton, type DailyScore } from '../components/team/healthChartTypes';
+import {
+  AuditTrailFilters,
+  AuditTrailTable,
+  DEFAULT_FILTERS,
+  ExportButton,
+  ValidationDetailModal,
+  useDetailModal,
+  type AuditFilters,
+  type AuditRow,
+} from '../components/team/AuditTrail';
+
+// recharts (~100 KB) is the single heaviest dependency in the app. Loading the
+// chart lazily keeps it in its own chunk: only a signed-in team member viewing
+// this page pays for it, and the landing and editor bundles are untouched.
+const HealthTrendChart = lazy(() =>
+  import('../components/team/HealthTrendChart').then((m) => ({ default: m.HealthTrendChart })),
+);
+
+interface Health extends HealthSummary {
+  daily_scores: DailyScore[];
+  top_issues: IssueRow[];
+  member_scores: { clerk_user_id: string; name: string; avg_score: number | null; count: number; qualifies: boolean }[];
+}
 
 // Sprint 6B — #/team. One fetch of /api/teams/dashboard paints the whole page.
 //
@@ -151,9 +185,6 @@ function Section({ title, right, children }: { title: string; right?: React.Reac
   );
 }
 
-function Empty({ children }: { children: React.ReactNode }) {
-  return <div style={{ ...card, color: '#71717a', fontSize: 13, lineHeight: 1.6 }}>{children}</div>;
-}
 
 // ── page ────────────────────────────────────────────────────────────────────
 
@@ -162,6 +193,21 @@ export function TeamPage() {
   const { getToken, isLoaded } = useAuth();
 
   const [data, setData] = useState<Dashboard | null>(null);
+  const [health, setHealth] = useState<Health | null>(null);
+  const [healthLoading, setHealthLoading] = useState(true);
+
+  const [auditFilters, setAuditFilters] = useState<AuditFilters>(DEFAULT_FILTERS);
+  const [audit, setAudit] = useState<{
+    rows: AuditRow[];
+    total: number;
+    truncated: boolean;
+    can_export: boolean;
+    export_requires_upgrade: boolean;
+    members: { clerk_user_id: string; name: string }[];
+    issue_types: string[];
+  } | null>(null);
+  const [auditLoading, setAuditLoading] = useState(true);
+  const detail = useDetailModal();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -207,6 +253,38 @@ export function TeamPage() {
     }
   }, [authedFetch]);
 
+  // Fetched separately so a slow health query never delays the members list.
+  const loadHealth = useCallback(async () => {
+    setHealthLoading(true);
+    try {
+      const res = await authedFetch('/api/teams/health?days=30');
+      if (res.ok) setHealth((await res.json()) as Health);
+    } catch {
+      // Health is supplementary; the rest of the page still renders.
+    } finally {
+      setHealthLoading(false);
+    }
+  }, [authedFetch]);
+
+  const loadAudit = useCallback(
+    async (f: AuditFilters) => {
+      setAuditLoading(true);
+      try {
+        const qs = new URLSearchParams({ days: String(f.days), limit: '100' });
+        if (f.member) qs.set('member', f.member);
+        if (f.verdict) qs.set('verdict', f.verdict);
+        if (f.issue) qs.set('issue', f.issue);
+        const res = await authedFetch(`/api/teams/audit?${qs.toString()}`);
+        if (res.ok) setAudit(await res.json());
+      } catch {
+        // Audit is supplementary; the rest of the page still renders.
+      } finally {
+        setAuditLoading(false);
+      }
+    },
+    [authedFetch],
+  );
+
   useEffect(() => {
     if (!isLoaded) return;
     if (!isPaid) {
@@ -214,7 +292,12 @@ export function TeamPage() {
       return;
     }
     void load();
-  }, [isLoaded, isPaid, load]);
+    void loadHealth();
+    void loadAudit(auditFilters);
+    // auditFilters is intentionally omitted: filter changes refetch through
+    // onChange below, not by re-running this mount effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, isPaid, load, loadHealth, loadAudit]);
 
   const invite = async () => {
     const email = inviteEmail.trim().toLowerCase();
@@ -324,7 +407,7 @@ export function TeamPage() {
     );
   }
 
-  const { team, role, seats, members, pendingInvites, recent, topIssues } = data;
+  const { team, role, seats, members, pendingInvites, recent } = data;
   const isOwner = role === 'owner';
   const canInvite = (role === 'owner' || role === 'manager') && !seats.full;
   const limitLabel = seats.limit ?? '∞';
@@ -366,7 +449,38 @@ export function TeamPage() {
         </div>
       )}
 
-      {/* 2. MEMBERS */}
+      {/* 2. HEALTH SCORE + TREND — side by side on desktop, stacked on mobile.
+             minmax(260px, …) makes the columns collapse without a media query. */}
+      <Section title="Team Health">
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 12,
+            alignItems: 'start',
+          }}
+        >
+          {healthLoading ? <TeamHealthScoreSkeleton /> : health ? <TeamHealthScore data={health} /> : null}
+          {healthLoading ? (
+            <HealthTrendChartSkeleton />
+          ) : health ? (
+            <Suspense fallback={<HealthTrendChartSkeleton />}>
+              <HealthTrendChart data={health.daily_scores} />
+            </Suspense>
+          ) : null}
+        </div>
+      </Section>
+
+      {/* 4. ISSUE BREAKDOWN */}
+      <Section title="Most Common Issues This Month">
+        {healthLoading ? (
+          <IssueBreakdownSkeleton />
+        ) : health ? (
+          <IssueBreakdown issues={health.top_issues} />
+        ) : null}
+      </Section>
+
+      {/* 4. MEMBERS */}
       <Section title="Team Members">
         <div style={card}>
           {members.map((m) => {
@@ -501,26 +615,40 @@ export function TeamPage() {
         )}
       </Section>
 
-      {/* 4. TEAM INSIGHTS */}
-      <Section title="Top Issues This Month">
-        {topIssues.length === 0 ? (
-          <Empty>No findings recorded yet — nothing to summarise.</Empty>
-        ) : (
-          <div style={card}>
-            {topIssues.map((t) => (
-              <Row key={t.issueType}>
-                <code style={{ fontSize: 12.5, color: '#e4e4e7', flex: 1, minWidth: 0 }}>{t.issueType}</code>
-                <span style={{ fontSize: 12.5, color: '#a1a1aa', whiteSpace: 'nowrap' }}>
-                  {t.count} time{t.count === 1 ? '' : 's'}
-                </span>
-                <span style={{ fontSize: 11.5, color: '#52525b', whiteSpace: 'nowrap', minWidth: 42, textAlign: 'right' }}>
-                  {t.pct}%
-                </span>
-              </Row>
-            ))}
-          </div>
+      {/* 5. AUDIT TRAIL */}
+      <Section
+        title="Audit Trail"
+        right={
+          audit ? (
+            <ExportButton
+              rows={audit.rows}
+              teamSlug={team.slug}
+              disabled={auditLoading}
+              locked={audit.export_requires_upgrade}
+            />
+          ) : null
+        }
+      >
+        <AuditTrailFilters
+          filters={auditFilters}
+          members={audit?.members ?? []}
+          issueTypes={audit?.issue_types ?? []}
+          disabled={auditLoading}
+          onChange={(next) => {
+            setAuditFilters(next);
+            void loadAudit(next);
+          }}
+        />
+        <AuditTrailTable rows={audit?.rows ?? []} loading={auditLoading} onView={detail.open} />
+        {audit && audit.total > audit.rows.length && (
+          <p style={{ fontSize: 12, color: '#71717a', marginTop: 8 }}>
+            Showing {audit.rows.length} of {audit.total} matching validations
+            {audit.truncated && ' (scan limit reached — counts are a lower bound)'}.
+          </p>
         )}
       </Section>
+
+      <ValidationDetailModal row={detail.row} onClose={detail.close} />
     </Shell>
   );
 }

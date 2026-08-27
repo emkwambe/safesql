@@ -22,7 +22,8 @@
     "nanoid": "^5.1.11",
     "node-sql-parser": "^5.4.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260503.1",
