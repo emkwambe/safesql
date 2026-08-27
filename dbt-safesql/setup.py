@@ -1,7 +1,7 @@
 """PyPI packaging for dbt-safesql.
 
-Ships validate_dbt.py as a top-level module plus the `safesql-dbt` console
-script. Distribution is PyPI, not dbt Hub: dbt packages carry Jinja/SQL only and
+Ships validate_dbt.py as a top-level module plus the `safesql-dbt`,
+`dbt-safesql` and `safesql-sql` console scripts. Distribution is PyPI, not dbt Hub: dbt packages carry Jinja/SQL only and
 cannot make HTTP calls, so the validator has to be an ordinary Python CLI that
 runs beside dbt (pre-commit, CI, or a shell step before `dbt run`).
 """
@@ -16,7 +16,7 @@ with open(os.path.join(HERE, "README.md"), "r", encoding="utf-8") as fh:
 
 setup(
     name="dbt-safesql",
-    version="0.2.0",
+    version="0.2.1",
     description="Validate dbt SQL models with SafeSQL Pro before they execute",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
@@ -36,7 +36,13 @@ setup(
         "console_scripts": [
             # project-wide, dbt-aware (walks models/**, builds DDL from schema.yml)
             "safesql-dbt=validate_dbt:main",
-            # file-scoped, not dbt-aware (validates exactly the paths given)
+            # 0.2.1 — same function under the package name, so `pip install
+            # dbt-safesql` gives you a `dbt-safesql` command. safesql-dbt stays
+            # as the original name and is what .pre-commit-hooks.yaml invokes.
+            "dbt-safesql=validate_dbt:main",
+            # file-scoped, not dbt-aware (validates exactly the paths given).
+            # This is the entry point for the `safesql-sql` pre-commit hook —
+            # removing it breaks that hook for every consumer.
             "safesql-sql=validate_files:main",
         ]
     },

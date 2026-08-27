@@ -10,8 +10,16 @@ before execution; dbt tests validate the output after.
 pip install dbt-safesql
 ```
 
-That installs the `safesql-dbt` console script and its two dependencies
-(`requests`, `pyyaml`). Python 3.9+.
+That installs three console scripts and two dependencies (`requests`,
+`pyyaml`). Python 3.9+.
+
+| Command | |
+|---|---|
+| `dbt-safesql` | Primary. Project-wide, dbt-aware. Matches the package name. |
+| `safesql-dbt` | Alias for the same command, kept from 0.2.0 so existing scripts and CI steps keep working. |
+| `safesql-sql` | File-scoped, not dbt-aware — validates exactly the paths given. Used by the `safesql-sql` pre-commit hook. |
+
+`dbt-safesql` and `safesql-dbt` are the same entry point; use either.
 
 From a checkout instead:
 
@@ -23,7 +31,7 @@ pip install ./dbt-safesql
 
 ```bash
 export SAFESQL_API_KEY=ssk_live_xxxx
-safesql-dbt --project-dir . --dialect postgresql
+dbt-safesql --project-dir . --dialect postgresql
 ```
 
 Get an API key at https://safesqlpro.dev/settings (Pro tier and above).
@@ -79,13 +87,13 @@ normalised to the engine's `postgresql` / `bigquery`.
 ### 2. CI, or a shell step before dbt run
 
 ```bash
-safesql-dbt --project-dir . --threshold 70 && dbt run
+dbt-safesql --project-dir . --threshold 70 && dbt run
 ```
 
 ```yaml
 # .github/workflows/dbt.yml
 - run: pip install dbt-safesql
-- run: safesql-dbt --project-dir . --threshold 70
+- run: dbt-safesql --project-dir . --threshold 70
   env:
     SAFESQL_API_KEY: ${{ secrets.SAFESQL_API_KEY }}
 ```
@@ -157,8 +165,8 @@ The default of `70` therefore fails on errors and high-risk warnings and stays
 quiet above that. Raise it to `85` to also block medium warnings.
 
 ```bash
-safesql-dbt --threshold 85     # stricter
-safesql-dbt --threshold 41     # hard errors only
+dbt-safesql --threshold 85     # stricter
+dbt-safesql --threshold 41     # hard errors only
 ```
 
 ### `--warn-only`
@@ -167,7 +175,7 @@ Reports everything but exits 0, so it never blocks a commit or a build. Useful
 when introducing SafeSQL to an existing project with a backlog of findings.
 
 ```bash
-safesql-dbt --warn-only
+dbt-safesql --warn-only
 ```
 
 ## Integration tests
@@ -181,8 +189,8 @@ models:
 | `test_cartesian.sql` | `CARTESIAN_JOIN` | 25 |
 
 ```bash
-safesql-dbt --project-dir integration_tests --threshold 70   # exits 1
-safesql-dbt --project-dir integration_tests --warn-only      # exits 0
+dbt-safesql --project-dir integration_tests --threshold 70   # exits 1
+dbt-safesql --project-dir integration_tests --warn-only      # exits 0
 ```
 
 It is never built with `dbt run` — `test_cartesian.sql` is intentionally

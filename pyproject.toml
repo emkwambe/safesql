@@ -7,19 +7,20 @@
 # `safesql-dbt` console scripts that .pre-commit-hooks.yaml invokes.
 #
 # Keep the dbt-safesql lower bound in step with the hooks manifest: the
-# safesql-sql entry point first appears in 0.2.0.
+# safesql-sql entry point first appears in 0.2.0; the dbt-safesql command
+# alias in 0.2.1.
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "safesql-pre-commit-hooks"
-version = "0.2.0"
+version = "0.2.1"
 description = "pre-commit hook shim for SafeSQL Pro (installs dbt-safesql)"
 readme = "dbt-safesql/README.md"
 requires-python = ">=3.9"
 license = { text = "Apache-2.0" }
-dependencies = ["dbt-safesql>=0.2.0"]
+dependencies = ["dbt-safesql>=0.2.1"]
 
 [project.urls]
 Homepage = "https://safesqlpro.dev"
